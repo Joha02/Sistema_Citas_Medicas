@@ -1,0 +1,109 @@
+header{
+    background-color: darkcyan;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: darkcyan;
+  color: lightblue;
+  text-align: center;
+}
+
+.logo>img{ 
+    margin-top: 10px; 
+    height: 40px;
+    width: auto;
+}
+
+.logo>span{
+    font-family: cursive; 
+    font-size: 2em;
+    color: lightblue;
+}
+
+body{
+    background:  url(../Images/background.jpg);
+    background-position:  center;
+    background-size: cover;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid gray;
+}
+
+tr:hover {background-color:#f5f5f5;}
+
+.panel{width:100%;margin: auto; margin-top: 5px; border: 3px solid gray;  padding: 10px;}
+.fila{width:100%}
+.encabezado{background-color: black; color:rgb(255, 105, 45); text-align:center; font-size: 1.5em;}
+.etiqueta{width:20%;display:inline-block}
+.campo{width:60%;padding: 5px;display:inline-block}
+
+input[type=text].error,input[type=password].error{
+    border-color: red;
+    padding-right: 20px;
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: 12 12;
+    background-image: url("/SCM/Images/error.png");    
+}
+
+.link-button { 
+     background: none;
+     border: none;
+     color: lightblue;
+     text-decoration: underline;
+     cursor: pointer; 
+}
+
+.buttonClass {
+  font-size:15px;
+  font-family:Arial;
+  width:200px;
+  height:70px;
+  border-width:2px;
+  color:#505739;
+  border-color:#333029;
+  font-weight:bold;
+  border-top-left-radius:15px;
+  border-top-right-radius:15px;
+  border-bottom-left-radius:15px;
+  border-bottom-right-radius:15px;
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  text-shadow: 0px 1px 0px #ffffff;
+  background:linear-gradient(#eae0c2, #ccc2a6);
+}
+
+.buttonClass:hover {
+  background: linear-gradient(#ccc2a6, #eae0c2);
+}
+
+.tableCenter{
+    margin: 0 auto;
+}
+
+.center{
+    text-align: center;
+    justify-content: center;
+}
+
+  .spec {
+ float: left;
+ width: 45%;
+}
+.city {
+ float: right;
+width: 45%;
+}
