@@ -1,13 +1,14 @@
 package logic;
 
 import data.Dao;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
     private Dao dao;
     private static Service Instance;
-    private List<Registro> registros = new ArrayList();
+    private List<Medico> registros = new ArrayList();
     private List<String> especialidades = new ArrayList();
     private List<Ciudad> ciudades = new ArrayList();
     
@@ -97,19 +98,14 @@ public class Service {
     } 
     
        //---------------------------------------------------------------------
-    public List getRegistros(){
+    public List getRegistros() throws SQLException{
+        registros = dao.getRegistros(0);
         return registros;
-    }
-    
-    public Medico getMedico(int pos){
-        Medico med = registros.get(pos).getMedico();
-        return med;
     }
     
     public void AddRegistro(Medico medico) throws Exception {
         if (medico != null) { 
-            Registro reg = new Registro(medico);
-            registros.add(reg);
+            registros.add(medico);
         } 
         else { throw new Exception("Error al guardar registro"); }
     }

@@ -12,13 +12,9 @@ public class Medico extends Usuario {
     int estado;
     List<Cita> citas; 
     
-    
-    
-    
     public Medico() {
     }
-
-
+    
     public Medico(String ID, String password, String name, String especialidad, int costo, Ciudad ciudad, String direccion, String info) {
         super(ID, password, name);
         this.especialidad = especialidad;
