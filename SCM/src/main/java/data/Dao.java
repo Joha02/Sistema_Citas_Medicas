@@ -8,6 +8,8 @@ import logic.Cita;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dao {
     Database db;
@@ -29,10 +31,20 @@ public class Dao {
     
     public Medico fromMedicos(ResultSet rs, String alias){
         try {
+            //id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado
             Medico m = new Medico();
             m.setID(rs.getString(alias + ".id"));
             m.setPassword(rs.getString(alias + ".password"));
             m.setName(rs.getString(alias + ".name"));
+            m.setEspecialidad(rs.getString(alias + ".especialidad"));
+            m.setCosto(rs.getInt(alias + ".costo"));
+            m.setCiudad(new Ciudad("",rs.getString(alias + ".ciudad")));
+            m.setDireccion(rs.getString(alias + ".direccion"));
+            m.setTipo(rs.getString(alias + ".tipo"));
+            m.setInfo(rs.getString(alias + ".info"));
+            m.setEstado(rs.getInt(alias + ".estado"));
+            
+            
             return m;
         } catch (SQLException ex) { return null; }
     }
@@ -57,9 +69,28 @@ public class Dao {
         stm.setInt(5, m.getEstado());
         int count=db.executeUpdate(stm);
         if (count==0){
-            throw new Exception("Paciente ya existe");
+            throw new Exception("MEdico ya existe");
         }
     }
+    
+     public List<Medico> searchMedicosDisponibles(String ciudad, String especialidad) throws Exception {
+        String sql = "select * from medicos c where ciudad like ? and especialidad like ?;";// para revisasr inicio y final de las palabras
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, "%"+ciudad+"%");
+        stm.setString(2, "%"+especialidad+"%");
+        ResultSet rs = db.executeQuery(stm);
+    
+         
+        List<Medico> medicosDisponibles = new ArrayList();
+     
+         while (rs.next()) {
+             medicosDisponibles.add(fromMedicos(rs, "c"));
+         }
+
+         return medicosDisponibles;
+
+    }
+    
     //---------------------------- PACIENTES ----------------------------
     public Paciente readPaciente(String id, String password) throws Exception {
         String sql = "select * from pacientes p where id=? and password=?";
@@ -139,7 +170,7 @@ public class Dao {
     
     //----------------------------- CITAS ----------------------------  
     public Cita readCita(String id) throws Exception {
-        String sql = "select * from pacientes p where id=?";
+        String sql = "select * from citas p where id=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, id);
         ResultSet rs = db.executeQuery(stm);
@@ -148,20 +179,31 @@ public class Dao {
     }
     
     public Cita fromCitas(ResultSet rs, String alias){
+        //id,date,estado,anotaciones, id_medico,id_paciente
         try {
             Cita c = new Cita();
             c.setId(rs.getString(alias + ".id"));
+            c.setDate(rs.getString(alias + ".date"));
+            c.setEstado(rs.getString(alias + ".estado")); 
+            c.setAnotaciones(rs.getString(alias + ".anotaciones"));
+            c.setMedico(new Medico(rs.getString(alias + ".id_medico")));
+            c.setpaciente(new Paciente(rs.getString(alias + ".id_paciente")));
             return c;
         } catch (SQLException ex) { return null; }
     }
     
-    public Cita searchCita(String id) throws Exception {
-        String sql = "select from * citas c where id=?";
+    public List<Cita> searchCitasDisponibles(String id_medico) throws Exception {
+        String sql = "select * from citas c where id_medico=? and id_paciente is null";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, id);
+        stm.setString(1, id_medico);
         ResultSet rs = db.executeQuery(stm);
-        if (rs.next()) { return fromCitas(rs, "c"); } 
-        else { throw new Exception("Cita no existe"); }
+   
+        List<Cita> citasDisponibles = new ArrayList();
+     
+        while (rs.next()) { citasDisponibles.add(fromCitas(rs, "c")); } 
+        
+           return citasDisponibles; 
+     
     }
     
     //---------------------------- CIUDADES ----------------------------

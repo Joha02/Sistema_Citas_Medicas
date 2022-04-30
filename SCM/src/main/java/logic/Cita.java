@@ -7,18 +7,19 @@ public class Cita {
     private String ID;
     private Medico medico;
     private Paciente paciente;
-    private Timestamp date;
+    private String date;
     private String estado;
     private String anotaciones;
 
     public Cita() {
     }
 
-    public Cita(Medico medico, Paciente paciente, String ID, String estado, String anotaciones) {
+    public Cita(Medico medico, Paciente paciente, String ID, String estado, String anotaciones, String date) {
         this.medico = medico;
         this.paciente = paciente;
         this.estado = estado;
         this.anotaciones = anotaciones;
+        this.date = date; 
     }
 
     public String getId() {
@@ -45,11 +46,11 @@ public class Cita {
         this.paciente = paciente;
     }
 
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

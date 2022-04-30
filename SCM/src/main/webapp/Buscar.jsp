@@ -1,6 +1,9 @@
+<%@page import="logic.Cita"%>
+<%@page import="logic.Medico"%>
 <%@page import="java.util.List"%>
 <%@page import="presentation.ciudad.ModelCiudad"%>
 <%@page import="logic.Ciudad"%>
+<%@page import="presentation.buscar.ModelBuscar"%>
 <link href="/SCM/CSS/Form.css" rel="stylesheet" type="text/css" /> 
 
 <%-- 
@@ -8,6 +11,8 @@
     ModelCiudad model = (ModelCiudad) request.getAttribute("ModelCiudad");
     List<Ciudad> ciudades = model.getCiudades();
 --%>
+<% ModelBuscar model = (ModelBuscar) request.getAttribute("ModelBuscar");
+%>
 
 <html>
     <head>
@@ -18,26 +23,15 @@
         <%@ include file="/Header.jsp" %>
         <div>
             <h1>&bull; Indicar Datos Compra&bull;</h1>
-            <form action = "" method = "GET">
-                <input type = "hidden" name = "tanda" value="nombre" />
+            <form action = "/SCM/presentation/buscar/buscar" method = "GET">
                 <div class="name">
                     <label for="subject"></label>
-                    <select name="cantGen" >
-                        <option disabled hidden selected>Especialidad</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
+                    <input  placeholder="Especialidad" type="text" name="Especialidad">
                 </div>
 
                 <div class="email">
                     <label for="subject"></label>
-                    <select name="cantAM">
-                        <option disabled hidden selected>Ciudad</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                    </select>
+                        <input  placeholder="Ciudad" type="text" name="Ciudad">
                 </div>
 
 
@@ -45,6 +39,29 @@
                     <input type="submit" value="Buscar" id="form_button" />
                 </div>
             </form>
+            <table>  
+                <% for (Medico m : model.getMedicos()) {%> 
+                <tr>
+                    <td><%= m.getName() %></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>Dia</td>
+                                <td>Hora</td>
+                            </tr>
+                            <% for (Cita c : m.getCitas()) {%> 
+                            <tr>
+                                <td><%= c.getDate().split(" ")[0] %></td>
+                                <td><%= c.getDate().split(" ")[1] %></td>
+                            </tr>
+                            <%}%>
+                        </table>
+                    </td>
+                </tr>
+                <%}%>
+
+
+            </table>
         </div>
     </body>
 </html>

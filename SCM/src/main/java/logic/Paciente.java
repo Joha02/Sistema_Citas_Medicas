@@ -7,6 +7,11 @@ public class Paciente extends Usuario {
         super();
         this.tipo = "";
     }
+   
+    public Paciente(String id){
+        super(id);
+        this.tipo = "";
+    }
     
     public Paciente(String ID, String password, String name){
         super(ID, password, name);
