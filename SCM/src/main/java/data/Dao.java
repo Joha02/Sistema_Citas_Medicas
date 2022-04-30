@@ -69,7 +69,7 @@ public class Dao {
         stm.setInt(5, m.getEstado());
         int count=db.executeUpdate(stm);
         if (count==0){
-            throw new Exception("Medico ya existe");
+            throw new Exception("MEdico ya existe");
         }
     }
     
@@ -80,10 +80,7 @@ public class Dao {
         stm.setString(2, "%"+especialidad+"%");
         ResultSet rs = db.executeQuery(stm);
     
-        if(!rs.next())    
-        {
-            throw new Exception("Medicos no existen");
-        }  
+         
         List<Medico> medicosDisponibles = new ArrayList();
      
          while (rs.next()) {
