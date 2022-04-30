@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import logic.Registro;
 
 public class Dao {
     Database db;
@@ -247,4 +248,17 @@ public class Dao {
             throw new Exception("Ciudad ya existe");
         }
     }
+    
+    public List getRegistros(int estado) throws SQLException{
+        String sql = "select * from medicos m where estado=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setInt(1, estado);
+        ResultSet rs = db.executeQuery(stm);
+   
+        List<Medico> registros = new ArrayList();
+     
+        while (rs.next()) { registros.add(fromMedicos(rs, "m")); } 
+        
+           return registros;
+    } 
 }

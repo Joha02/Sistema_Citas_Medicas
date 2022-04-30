@@ -23,8 +23,7 @@
         
             <%
                 for (int i = 0; i < registros.size(); i++) {
-                    Registro reg = (Registro) registros.get(i);
-                    Medico med = reg.getMedico();
+                    Medico med = (Medico) registros.get(i);
             %>
             <tr>
             <td><h2>ID: </h2><h3><%=med.getID()%></h3></td>
