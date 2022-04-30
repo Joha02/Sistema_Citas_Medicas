@@ -4,6 +4,7 @@ import logic.Service;
 import logic.Usuario;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.Medico;
 
 @WebServlet(name = "ControllerBuscar", urlPatterns = {"/presentation/buscar/show", "/presentation/buscar/buscar"})
 public class ControllerBuscar extends HttpServlet {
@@ -36,36 +38,32 @@ public class ControllerBuscar extends HttpServlet {
     public String searchAction(HttpServletRequest request) {
         ModelBuscar model = (ModelBuscar) request.getAttribute("ModelBuscar");
         Service service = Service.instance();
-        HttpSession session = request.getSession(true);
-        try {
-            String viewUrl = "";
-            switch (request.getParameter("tipo")) {
-                case "1":
-                    Usuario medico = service.searchMedico(model.getCurrent().getID(), model.getCurrent().getPassword());
-                    session.setAttribute("usuario", medico);
-                    viewUrl = "/presentation/medico/show";
-                    break;
-                   
-                case "2":
-                    Usuario paciente = service.searchPaciente(model.getCurrent().getID(), model.getCurrent().getPassword());
-                    session.setAttribute("usuario", paciente);
-                    viewUrl = "/presentation/paciente/show";
-                    break;
 
-                case "3":
-                    Usuario admin = service.searchAdmin(model.getCurrent().getID(), model.getCurrent().getPassword());
-                    session.setAttribute("usuario", admin);
-                    viewUrl = "/presentation/admin/show";
-                    break;
+        try {
+            String especialidades = request.getParameter("Especialidad");
+           
+            if(especialidades == null){
+              
+             especialidades = ""; 
+            
             }
             
-            return viewUrl;
+            String ciudad = request.getParameter("Ciudad");
+            
+            if(ciudad == null){
+              
+             ciudad = ""; 
+            
+            }
+            
+            List<Medico> medicos = service.searchMedicos(ciudad, especialidades);
+            
+            
+            
+            return "/Buscar.jsp";
         } catch (Exception ex) {
-            Map<String, String> errores = new HashMap<>();
-            request.setAttribute("errores", errores);
-            errores.put("ID", "Usuario o contraseña incorrectos");
-            errores.put("password", "Usuario o contraseña incorrectos");
-            return "/Error.jsp";
+            
+           return "/Error.jsp";
         }
     }
 

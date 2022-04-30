@@ -34,7 +34,7 @@
                 <a href="/SCM/About.jsp">About</a>
             </li>
             <li >
-                <a  href="/SCM/Buscar.jsp">Buscar</a>
+                <a  href="/SCM/presentation/buscar/show">Buscar</a>
             </li> 
         </ul>
     </div>
