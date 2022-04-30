@@ -51,7 +51,8 @@
                             </tr>
                             <% for (Cita c : m.getCitas()) {%> 
                             <tr>
-                                <td><%= c.getDate() %></td>
+                                <td><%= c.getDate().split(" ")[0] %></td>
+                                <td><%= c.getDate().split(" ")[1] %></td>
                             </tr>
                             <%}%>
                         </table>
