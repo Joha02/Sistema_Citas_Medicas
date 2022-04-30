@@ -45,6 +45,24 @@
                     <input type="submit" value="Buscar" id="form_button" />
                 </div>
             </form>
+            <table>  
+              <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>
+                <table>
+                     <tr>
+                       <td>Dia</td>
+                       <td>Hora</td>
+                     </tr>
+                     <tr>
+                       <td>Mier 17 de agosto
+                       </td>
+                       <td>8 am</td>
+                     </tr>
+                   </table>
+                </td>
+              </tr>
+            </table>
         </div>
     </body>
 </html>

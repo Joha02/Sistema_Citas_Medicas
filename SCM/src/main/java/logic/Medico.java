@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.List;
+
 public class Medico extends Usuario {
     String especialidad;
     int costo;
@@ -8,9 +10,12 @@ public class Medico extends Usuario {
     String tipo;
     String info;
     int estado;
+    List<Cita> citas; 
+    
+    
+    
     
     public Medico() {
- 
     }
 
 
@@ -97,5 +102,14 @@ public class Medico extends Usuario {
         return "Medico{" + "especialidad=" + especialidad + ", costo=" + costo + ", ciudad=" + ciudad + ", direccion=" + direccion + ", tipo=" + tipo + ", info=" + info + '}';
     }   
    
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas ) {
+        this.citas = citas;
+    }
+
   
+    
 }

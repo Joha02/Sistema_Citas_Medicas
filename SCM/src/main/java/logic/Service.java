@@ -60,6 +60,8 @@ public class Service {
         else { throw new Exception("No se ha añadido usuario"); }
     }
     
+    
+    
     //--------------------------- PACIENTE ---------------------------
     public Paciente searchPaciente(String ID, String password) throws Exception{
         Paciente pac = dao.searchPaciente(ID);
@@ -150,4 +152,21 @@ public class Service {
         }
         else { throw new Exception("No se ha añadido ciudad"); }
     }
+    
+    
+     //-------------------------------------Citas--------------------------------------//
+
+    public List<Medico> searchMedicos(String ciudad, String especialidad) throws Exception{
+        return dao.searchMedicosDisponibles(ciudad,especialidad);
+    }
+    
+    public List<Cita> searchCita(String medico_id) throws Exception{
+        return dao.searchCitasDisponibles(medico_id);
+    }
+    
+    
+    
+    
 }
+
+

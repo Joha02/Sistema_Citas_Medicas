@@ -8,6 +8,8 @@ import logic.Cita;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dao {
     Database db;
@@ -60,6 +62,26 @@ public class Dao {
             throw new Exception("Paciente ya existe");
         }
     }
+    
+     public List<Medico> searchMedicosDisponibles(String ciudad, String especialidad) throws Exception {
+        String sql = "select * from medicos c where ciudad like %?%  and especialidad  like %?%";// para revisasr inicio y final de las palabras
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, ciudad);
+        stm.setString(2, especialidad);
+        ResultSet rs = db.executeQuery(stm);
+    
+        if(!rs.next())    
+        {
+            throw new Exception("Medicos no existen");
+        }  
+        List<Medico> medicosDisponibles = new ArrayList();
+     
+        while (rs.next()) { medicosDisponibles.add(fromMedicos(rs, "c")); } 
+        
+           return medicosDisponibles; 
+     
+    }
+    
     //---------------------------- PACIENTES ----------------------------
     public Paciente readPaciente(String id, String password) throws Exception {
         String sql = "select * from pacientes p where id=? and password=?";
@@ -139,7 +161,7 @@ public class Dao {
     
     //----------------------------- CITAS ----------------------------  
     public Cita readCita(String id) throws Exception {
-        String sql = "select * from pacientes p where id=?";
+        String sql = "select * from citas p where id=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, id);
         ResultSet rs = db.executeQuery(stm);
@@ -155,13 +177,22 @@ public class Dao {
         } catch (SQLException ex) { return null; }
     }
     
-    public Cita searchCita(String id) throws Exception {
-        String sql = "select from * citas c where id=?";
+    public List<Cita> searchCitasDisponibles(String id_medico) throws Exception {
+        String sql = "select * from citas c where id_medico=? and id_paciente is null";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, id);
+        stm.setString(1, id_medico);
         ResultSet rs = db.executeQuery(stm);
-        if (rs.next()) { return fromCitas(rs, "c"); } 
-        else { throw new Exception("Cita no existe"); }
+    
+        if(!rs.next())    
+        {
+            throw new Exception("Cita no existe");
+        }  
+        List<Cita> citasDisponibles = new ArrayList();
+     
+        while (rs.next()) { citasDisponibles.add(fromCitas(rs, "c")); } 
+        
+           return citasDisponibles; 
+     
     }
     
     //---------------------------- CIUDADES ----------------------------
