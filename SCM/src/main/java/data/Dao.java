@@ -192,10 +192,7 @@ public class Dao {
         stm.setString(1, id_medico);
         ResultSet rs = db.executeQuery(stm);
     
-        if(!rs.next())    
-        {
-            throw new Exception("Cita no existe");
-        }  
+        
         List<Cita> citasDisponibles = new ArrayList();
      
         while (rs.next()) { citasDisponibles.add(fromCitas(rs, "c")); } 
