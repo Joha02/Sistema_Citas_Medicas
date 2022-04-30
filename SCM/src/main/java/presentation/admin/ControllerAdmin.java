@@ -1,18 +1,26 @@
 package presentation.admin;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import logic.Medico;
+import logic.Service;
 import presentation.admin.ModelAdmin;
 
-@WebServlet(name = "ControllerAdmin", urlPatterns = {"/presentation/admin/show"})
+@WebServlet(name = "ControllerAdmin", urlPatterns = {"/presentation/admin/show", "/presentation/admin/ListadoMedicosShow", "/presentation/admin/ListadoMedicosUpdate"})
 public class ControllerAdmin extends HttpServlet{
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException, Exception {
 
         request.setAttribute("ModelAdmin", new ModelAdmin());
 
@@ -20,6 +28,12 @@ public class ControllerAdmin extends HttpServlet{
         switch (request.getServletPath()) {
             case "/presentation/admin/show":
                 viewUrl = this.show(request);
+                break;
+            case "/presentation/admin/ListadoMedicosShow":
+                viewUrl = this.ListadoMedicosShow(request);
+                break;
+            case "/presentation/admin/ListadoMedicosUpdate":
+                viewUrl = this.ListadoMedicosUpdate(request);
                 break;
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
@@ -36,6 +50,40 @@ public class ControllerAdmin extends HttpServlet{
         return "/Views/Admin/ViewAdmin.jsp";
     }
     
+    public String ListadoMedicosShow(HttpServletRequest request) throws SQLException{
+        ModelAdmin model = (ModelAdmin) request.getAttribute("ModelAdmin");
+        Service service = Service.instance();
+        HttpSession session = request.getSession(true);
+
+        List<Medico> registros = service.getRegistros();
+        
+        request.setAttribute("ModelAdmin", model);
+        session.setAttribute("ListarMedicos", registros);
+        try {
+
+            return "/Views/Admin/ListadoMedicos.jsp";
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+    
+    public String ListadoMedicosUpdate(HttpServletRequest request) throws SQLException, Exception{
+        ModelAdmin model = (ModelAdmin) request.getAttribute("ModelAdmin");
+        Service service = Service.instance();
+        HttpSession session = request.getSession(true);
+        
+        String medID = request.getParameter("medicoID");
+        service.setEstadoMed(1, medID);
+        
+        List<Medico> registros = service.getRegistros();
+        
+        model.setListarMedicos(registros);
+        request.setAttribute("ModelAdmin", model);
+        session.setAttribute("ListarMedicos", registros);
+        
+        return "/Views/Admin/ListadoMedicos.jsp";
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -48,7 +96,13 @@ public class ControllerAdmin extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -62,7 +116,13 @@ public class ControllerAdmin extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ControllerAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

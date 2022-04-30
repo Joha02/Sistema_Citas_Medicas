@@ -71,11 +71,11 @@ input[type=text].error,input[type=password].error{
 .buttonClass {
   font-size:15px;
   font-family:Arial;
-  width:200px;
-  height:70px;
+  width:210px;
+  height:900px;
   border-width:2px;
-  color:#505739;
-  border-color:#333029;
+  color: darkgray;
+  border-color: darkgray;
   font-weight:bold;
   border-top-left-radius:15px;
   border-top-right-radius:15px;
