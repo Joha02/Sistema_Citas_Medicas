@@ -58,9 +58,16 @@ public class ControllerBuscar extends HttpServlet {
             
             List<Medico> medicos = service.searchMedicos(ciudad, especialidades);
             
+            for (Medico m: medicos){
+                 m.setCitas(service.searchCita(m.getID()));
+            }
             
+            model.setMedicos(medicos);
             
+            request.setAttribute("ModelBuscar", model);
+           
             return "/Buscar.jsp";
+            
         } catch (Exception ex) {
             
            return "/Error.jsp";

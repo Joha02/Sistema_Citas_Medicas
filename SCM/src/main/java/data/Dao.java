@@ -31,10 +31,20 @@ public class Dao {
     
     public Medico fromMedicos(ResultSet rs, String alias){
         try {
+            //id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado
             Medico m = new Medico();
             m.setID(rs.getString(alias + ".id"));
             m.setPassword(rs.getString(alias + ".password"));
             m.setName(rs.getString(alias + ".name"));
+            m.setEspecialidad(rs.getString(alias + ".especialidad"));
+            m.setCosto(rs.getInt(alias + ".costo"));
+            m.setCiudad(new Ciudad("",rs.getString(alias + ".ciudad")));
+            m.setDireccion(rs.getString(alias + ".direccion"));
+            m.setTipo(rs.getString(alias + ".tipo"));
+            m.setInfo(rs.getString(alias + ".info"));
+            m.setEstado(rs.getInt(alias + ".estado"));
+            
+            
             return m;
         } catch (SQLException ex) { return null; }
     }
@@ -59,15 +69,15 @@ public class Dao {
         stm.setInt(5, m.getEstado());
         int count=db.executeUpdate(stm);
         if (count==0){
-            throw new Exception("Paciente ya existe");
+            throw new Exception("Medico ya existe");
         }
     }
     
      public List<Medico> searchMedicosDisponibles(String ciudad, String especialidad) throws Exception {
-        String sql = "select * from medicos c where ciudad like %?%  and especialidad  like %?%";// para revisasr inicio y final de las palabras
+        String sql = "select * from medicos c where ciudad like ? and especialidad like ?;";// para revisasr inicio y final de las palabras
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, ciudad);
-        stm.setString(2, especialidad);
+        stm.setString(1, "%"+ciudad+"%");
+        stm.setString(2, "%"+especialidad+"%");
         ResultSet rs = db.executeQuery(stm);
     
         if(!rs.next())    
@@ -76,10 +86,12 @@ public class Dao {
         }  
         List<Medico> medicosDisponibles = new ArrayList();
      
-        while (rs.next()) { medicosDisponibles.add(fromMedicos(rs, "c")); } 
-        
-           return medicosDisponibles; 
-     
+         while (rs.next()) {
+             medicosDisponibles.add(fromMedicos(rs, "c"));
+         }
+
+         return medicosDisponibles;
+
     }
     
     //---------------------------- PACIENTES ----------------------------
