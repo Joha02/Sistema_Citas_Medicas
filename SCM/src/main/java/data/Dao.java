@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import logic.Registro;
+import logic.Especialidad;
 
 public class Dao {
     Database db;
@@ -32,14 +32,13 @@ public class Dao {
     
     public Medico fromMedicos(ResultSet rs, String alias){
         try {
-            //id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado
             Medico m = new Medico();
             m.setID(rs.getString(alias + ".id"));
             m.setPassword(rs.getString(alias + ".password"));
             m.setName(rs.getString(alias + ".name"));
             m.setEspecialidad(rs.getString(alias + ".especialidad"));
             m.setCosto(rs.getInt(alias + ".costo"));
-            m.setCiudad(new Ciudad("",rs.getString(alias + ".ciudad")));
+            m.setCiudad(new Ciudad(rs.getString(alias + ".ciudad")));
             m.setDireccion(rs.getString(alias + ".direccion"));
             m.setTipo(rs.getString(alias + ".tipo"));
             m.setInfo(rs.getString(alias + ".info"));
@@ -92,17 +91,6 @@ public class Dao {
 
     }
      
-    public void setEstadoMed(int estado, String id) throws Exception {
-        String sql = "update medicos set estado=? where id=?";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setInt(1, estado);
-        stm.setString(2, id);
-        int count = db.executeUpdate(stm);
-        if (count == 0) {
-            throw new Exception("Medico no existe");
-        }
-    }
-    
     //---------------------------- PACIENTES ----------------------------
     public Paciente readPaciente(String id, String password) throws Exception {
         String sql = "select * from pacientes p where id=? and password=?";
@@ -180,6 +168,53 @@ public class Dao {
         else { throw new Exception("Admin no existe"); }
     }
     
+    public List<Medico> getRegistros(int estado) throws SQLException{
+        String sql = "select * from medicos m where estado=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setInt(1, estado);
+        ResultSet rs = db.executeQuery(stm);
+   
+        List<Medico> registros = new ArrayList();
+     
+        while (rs.next()) { registros.add(fromMedicos(rs, "m")); } 
+        
+           return registros;
+    }
+    
+    public void setEstadoMed(int estado, String id) throws Exception {
+        String sql = "update medicos set estado=? where id=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setInt(1, estado);
+        stm.setString(2, id);
+        int count = db.executeUpdate(stm);
+        if (count == 0) {
+            throw new Exception("Medico no existe");
+        }
+    }
+    
+    public List<Especialidad> getEspecialidades() throws SQLException {
+        List<Especialidad> especialidades = new ArrayList();
+        try {
+            String sql = "select * from especialidades e";
+            PreparedStatement stm = db.prepareStatement(sql);
+            ResultSet rs = db.executeQuery(stm);
+            while (rs.next()) {
+                especialidades.add(fromEspecialidad(rs, "e"));
+            } 
+        }catch (SQLException ex) {}
+        return especialidades;
+    }
+    
+    public Especialidad fromEspecialidad(ResultSet rs, String alias) {
+        try {
+            Especialidad e = new Especialidad();
+            e.setEspecialidad(rs.getString(alias + ".name"));
+            return e;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+    
     //----------------------------- CITAS ----------------------------  
     public Cita readCita(String id) throws Exception {
         String sql = "select * from citas p where id=?";
@@ -231,7 +266,6 @@ public class Dao {
     public Ciudad fromCiudads(ResultSet rs, String alias){
         try {
             Ciudad ci = new Ciudad();
-            ci.setID(rs.getString(alias + ".id"));
             ci.setName(rs.getString(alias + ".name"));
             return ci;
         } catch (SQLException ex) { return null; }
@@ -249,28 +283,14 @@ public class Dao {
     }
     
     public void addCiudad(Ciudad ci) throws Exception {
-        String sql = "insert into ciudades(id, name,) "
-                + "values (?,?);";
+        String sql = "insert into ciudades(name) "
+                + "values (?);";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, ci.getID());
         stm.setString(2, ci.getName());
         int count=db.executeUpdate(stm);
         if (count==0){
             throw new Exception("Ciudad ya existe");
         }
     }
-    
-     //---------------------------- REGISTROS ----------------------------
-    public List getRegistros(int estado) throws SQLException{
-        String sql = "select * from medicos m where estado=?";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setInt(1, estado);
-        ResultSet rs = db.executeQuery(stm);
-   
-        List<Medico> registros = new ArrayList();
      
-        while (rs.next()) { registros.add(fromMedicos(rs, "m")); } 
-        
-           return registros;
-    } 
 }

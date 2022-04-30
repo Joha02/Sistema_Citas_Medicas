@@ -1,5 +1,4 @@
 <%@page import="presentation.admin.ModelAdmin"%>
-<%@page import="logic.Registro"%>
 <%@page import="logic.Medico"%>
 <%@page import="java.util.List"%>
 <%@page import="logic.Service"%>

@@ -1,25 +1,15 @@
 package logic;
 
 public class Ciudad {
-    String ID;
     String name;
-
+    
     public Ciudad() {
     }
 
-    public Ciudad(String ID, String name) {
-        this.ID = ID;
+    public Ciudad(String name) {
         this.name = name;
     }
-
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
+    
     public String getName() {
         return name;
     }
@@ -28,11 +18,9 @@ public class Ciudad {
         this.name = name;
     }
 
-
-
     @Override
     public String toString() {
-        return "Ciudad{" + "ID=" + ID + ", name=" + name + '}';
+        return "Ciudad{" + name + "}";
     }
     
     
