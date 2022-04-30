@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "ControllerBuscar", urlPatterns = {"/presentation/login/show", "/presentation/login/login", "/presentation/login/logout"})
+@WebServlet(name = "ControllerBuscar", urlPatterns = {"/presentation/buscar/show", "/presentation/buscar/buscar"})
 public class ControllerBuscar extends HttpServlet {
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response)
@@ -22,53 +22,18 @@ public class ControllerBuscar extends HttpServlet {
 
         String viewUrl = "";
         switch (request.getServletPath()) {
-            case "/presentation/login/show":
-                viewUrl = this.show(request);
+            case "/presentation/buscar/show":
+                viewUrl = this.showAction(request);
                 break;
-            case "/presentation/login/login":
-                viewUrl = this.login(request);
+            case "/presentation/buscar/buscar":
+                viewUrl = this.searchAction(request);
                 break;
-            case "/presentation/login/logout":
-                viewUrl = this.logout(request);
-                break;
+          
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
     }
 
-    private String login(HttpServletRequest request) {
-        try {
-            Map<String, String> errores = this.validar(request);
-            if (errores.isEmpty()) {
-                this.updateModel(request);
-                return this.loginAction(request);
-            } else {
-                request.setAttribute("errores", errores);
-                return "/index.jsp";
-            }
-        } catch (Exception e) {
-            return "/ViewError.jsp";
-        }
-    }
-
-    Map<String, String> validar(HttpServletRequest request) {
-        Map<String, String> errores = new HashMap<>();
-        if (request.getParameter("IDFld").isEmpty()) {
-            errores.put("ID", "ID requerido");
-        }
-
-        if (request.getParameter("passwordFld").isEmpty()) {
-            errores.put("password", "Contraseña requerida");
-        }
-        return errores;
-    }
-
-    void updateModel(HttpServletRequest request) {
-        ModelBuscar model = (ModelBuscar) request.getAttribute("ModelBuscar");
-        model.getCurrent().setID(request.getParameter("IDFld"));
-        model.getCurrent().setPassword(request.getParameter("passwordFld"));
-    }
-
-    public String loginAction(HttpServletRequest request) {
+    public String searchAction(HttpServletRequest request) {
         ModelBuscar model = (ModelBuscar) request.getAttribute("ModelBuscar");
         Service service = Service.instance();
         HttpSession session = request.getSession(true);
@@ -104,26 +69,8 @@ public class ControllerBuscar extends HttpServlet {
         }
     }
 
-    public String logout(HttpServletRequest request) {
-        return this.logoutAction(request);
-    }
-
-    public String logoutAction(HttpServletRequest request) {
-        HttpSession session = request.getSession(true);
-        session.removeAttribute("usuario");
-        session.invalidate();
-        return "/index.jsp";
-    }
-
-    public String show(HttpServletRequest request) {
-        return this.showAction(request);
-    }
-
     public String showAction(HttpServletRequest request) {
-        ModelBuscar model = (ModelBuscar) request.getAttribute("ModelBuscar");
-        model.getCurrent().setID("");
-        model.getCurrent().setPassword("");
-        return "/ViewLogin.jsp";
+        return "/Buscar.jsp";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

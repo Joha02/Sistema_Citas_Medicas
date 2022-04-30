@@ -1,6 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="presentation.ciudad.ModelCiudad"%>
 <%@page import="logic.Ciudad"%>
+<%@page import="presentation.buscar.ModelBuscar"%>
 <link href="/SCM/CSS/Form.css" rel="stylesheet" type="text/css" /> 
 
 <%-- 
@@ -8,6 +9,7 @@
     ModelCiudad model = (ModelCiudad) request.getAttribute("ModelCiudad");
     List<Ciudad> ciudades = model.getCiudades();
 --%>
+    <% ModelBuscar model = (ModelBuscar) request.getAttribute("ModelBuscar"); %>
 
 <html>
     <head>
@@ -62,6 +64,7 @@
                    </table>
                 </td>
               </tr>
+              
             </table>
         </div>
     </body>
