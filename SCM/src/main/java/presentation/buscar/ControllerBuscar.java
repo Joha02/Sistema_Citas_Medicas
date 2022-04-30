@@ -64,7 +64,7 @@ public class ControllerBuscar extends HttpServlet {
             
             model.setMedicos(medicos);
             
-            request.setAttribute("ModelBuscar", model);
+          
            
             return "/Buscar.jsp";
             

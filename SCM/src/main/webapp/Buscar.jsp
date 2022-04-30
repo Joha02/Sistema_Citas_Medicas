@@ -42,7 +42,7 @@
             <table>  
                 <% for (Medico m : model.getMedicos()) {%> 
                 <tr>
-                    <td><% m.getName(); %></td>
+                    <td><%= m.getName() %></td>
                     <td>
                         <table>
                             <tr>
@@ -51,7 +51,7 @@
                             </tr>
                             <% for (Cita c : m.getCitas()) {%> 
                             <tr>
-                                <td><% c.getDate(); %></td>
+                                <td><%= c.getDate() %></td>
                             </tr>
                             <%}%>
                         </table>

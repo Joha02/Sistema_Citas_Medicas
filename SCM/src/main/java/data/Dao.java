@@ -179,9 +179,15 @@ public class Dao {
     }
     
     public Cita fromCitas(ResultSet rs, String alias){
+        //id,date,estado,anotaciones, id_medico,id_paciente
         try {
             Cita c = new Cita();
             c.setId(rs.getString(alias + ".id"));
+            c.setDate(rs.getString(alias + ".date"));
+            c.setEstado(rs.getString(alias + ".estado")); 
+            c.setAnotaciones(rs.getString(alias + ".anotaciones"));
+            c.setMedico(new Medico(rs.getString(alias + ".id_medico")));
+            c.setpaciente(new Paciente(rs.getString(alias + ".id_paciente")));
             return c;
         } catch (SQLException ex) { return null; }
     }
@@ -191,8 +197,7 @@ public class Dao {
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, id_medico);
         ResultSet rs = db.executeQuery(stm);
-    
-        
+   
         List<Cita> citasDisponibles = new ArrayList();
      
         while (rs.next()) { citasDisponibles.add(fromCitas(rs, "c")); } 
