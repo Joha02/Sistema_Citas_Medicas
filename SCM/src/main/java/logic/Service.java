@@ -9,7 +9,7 @@ public class Service {
     private Dao dao;
     private static Service Instance;
     private List<Medico> registros = new ArrayList();
-    private List<String> especialidades = new ArrayList();
+    private List<Especialidad> especialidades = new ArrayList();
     private List<Ciudad> ciudades = new ArrayList();
     
     
@@ -74,13 +74,6 @@ public class Service {
         else { throw new Exception("No se ha añadido usuario"); }
     }
     
-    public void AddEspecialidad(String espec) throws Exception {
-        if (espec != "") { 
-            especialidades.add(espec);
-        } 
-        else { throw new Exception("Error al guardar registro"); }
-    }
-    
     //--------------------------- PACIENTE ---------------------------
     public Paciente searchPaciente(String ID, String password) throws Exception{
         Paciente pac = dao.searchPaciente(ID);
@@ -105,6 +98,7 @@ public class Service {
         }
         else { throw new Exception("No se ha añadido usuario"); }
     }
+    
     //--------------------------- ADMINISTRADOR ---------------------------
     public Admin searchAdmin(String ID, String password) throws Exception{
         Admin ad = dao.searchAdmin(ID);
@@ -115,7 +109,7 @@ public class Service {
         }
     } 
     
-    public List getRegistros() throws SQLException{
+    public List<Medico> getRegistros() throws SQLException{
         registros = dao.getRegistros(0);
         return registros;
     }
@@ -126,6 +120,18 @@ public class Service {
         } 
         else { throw new Exception("Error al guardar registro"); }
     }
+    
+    public List<Especialidad> getEspecialidades() throws SQLException{
+        especialidades = dao.getEspecialidades();
+        return especialidades;
+    }
+    
+//    public void AddEspecialidad(String espec) throws Exception {
+//        if (espec != "") { 
+//            especialidades.add(espec);
+//        } 
+//        else { throw new Exception("Error al guardar registro"); }
+//    }
     
     //--------------------------- CIUDAD ---------------------------
     public void AddCiudad(Ciudad ciudad) throws Exception {
@@ -145,16 +151,16 @@ public class Service {
     } 
     
     public Ciudad CiudadFind(Ciudad ciudad) throws Exception{
-        Ciudad ciu = dao.searchCiudad(ciudad.getID());
+        Ciudad ciu = dao.searchCiudad(ciudad.getName());
         if (ciu != null) 
             return ciu;
         else 
             throw new Exception("Ciudad no existe");
     }    
     
-    public void AddCiudad(String id, String name) throws Exception {
-        if (id != "" && name != "") { 
-            dao.addCiudad(new Ciudad(id, name));
+    public void AddCiudad(String name) throws Exception {
+        if (name != "") { 
+            dao.addCiudad(new Ciudad(name));
         }
         else { throw new Exception("No se ha añadido ciudad"); }
     }
