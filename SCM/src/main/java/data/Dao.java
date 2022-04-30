@@ -91,6 +91,17 @@ public class Dao {
          return medicosDisponibles;
 
     }
+     
+    public void setEstadoMed(int estado, String id) throws Exception {
+        String sql = "update medicos set estado=? where id=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setInt(1, estado);
+        stm.setString(2, id);
+        int count = db.executeUpdate(stm);
+        if (count == 0) {
+            throw new Exception("Medico no existe");
+        }
+    }
     
     //---------------------------- PACIENTES ----------------------------
     public Paciente readPaciente(String id, String password) throws Exception {
@@ -249,6 +260,7 @@ public class Dao {
         }
     }
     
+     //---------------------------- REGISTROS ----------------------------
     public List getRegistros(int estado) throws SQLException{
         String sql = "select * from medicos m where estado=?";
         PreparedStatement stm = db.prepareStatement(sql);
