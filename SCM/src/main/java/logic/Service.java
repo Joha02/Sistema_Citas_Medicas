@@ -187,6 +187,13 @@ public class Service {
     public List<Cita> searchCita(String medico_id) throws Exception{
         return dao.searchCitasDisponibles(medico_id);
     }
+    
+    public ArrayList<Cita> seachCitasByPaciente(String id) throws Exception{
+        return dao.readByPaciente(id);
+    }
+    public ArrayList<Cita> seachCitasByMedico(String cedula) throws Exception{
+        return dao.readByMedico(cedula);
+    }
 }
 
 

@@ -136,6 +136,38 @@ public class Dao {
             throw new Exception("Paciente ya existe");
         }
     }
+    
+    public ArrayList<Cita> readByPaciente(String cedula) throws Exception {
+        ArrayList<Cita> resultado = new ArrayList<>();
+        String sql = "select * from citas c inner join medicos m on c.id_medico= m.id "
+                    + " where c.id_paciente=? order by m.name desc";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setObject(1, cedula);
+        ResultSet rs = db.executeQuery(stm);
+        Cita c;
+     
+        while (rs.next()) {
+                c = fromCita1(rs, "c");
+                resultado.add(c);
+            }
+        return resultado;
+    }
+    
+    public ArrayList<Cita> readByMedico(String cedula) throws Exception {
+        ArrayList<Cita> resultado = new ArrayList<>();
+        String sql = "select * from citas c inner join pacientes p on c.id_paciente= p.id "
+                    + " where c.id_medico=? ";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setObject(1, cedula);
+        ResultSet rs = db.executeQuery(stm);
+        Cita c;
+        
+        while (rs.next()) {
+                c = fromCita2(rs, "c");
+                resultado.add(c);
+            }
+        return resultado;
+    }
     //----------------------------- ADMINISTRADORES -----------------------------
     public Admin readAdmin(String id, String password) throws Exception {
         String sql = "select * from admins a where id=? and password=?";
@@ -296,6 +328,59 @@ public class Dao {
         
            return citasDisponibles; 
      
+    }
+    
+    Cita fromCita1(ResultSet rs, String alias) {
+        try {
+            //Cita
+            Cita c = new Cita();
+            c.setId(rs.getString(alias + ".id"));
+            c.setEstado(rs.getString(alias + ".estado"));
+            c.setDate(rs.getString(alias + ".date"));
+            c.setTime(rs.getString(alias + ".time"));
+            //Paciente
+            Paciente p = new Paciente();
+            p.setID(rs.getString(alias + ".id"));
+            c.setpaciente(p);
+            //Medico
+            Medico m = new Medico();
+            //Ciudad
+            Ciudad ciu = new Ciudad();
+            ciu.setName(rs.getString("m.name"));
+            //Especialidad
+            Especialidad esp = new Especialidad();
+            esp.setEspecialidad(rs.getString("m.name"));
+            m.setID(rs.getString(alias + ".id"));
+            m.setName(rs.getString("m.name"));
+            m.setCiudad(ciu);
+            m.setEspecialidad(esp.getEspecialidad());
+            c.setMedico(m);
+            return c;
+        } catch (SQLException ex) {
+            return null;
+        } 
+    }
+    
+    Cita fromCita2(ResultSet rs, String alias) {
+        try {
+            Cita c = new Cita();
+            c.setId(rs.getString(alias + ".id"));
+            c.setEstado(rs.getString(alias + ".estado"));
+            c.setDate(rs.getString(alias + ".date"));
+            c.setTime(rs.getString(alias + ".time"));
+            //Paciente
+            Paciente p = new Paciente();
+            p.setID(rs.getString(alias + ".id"));
+            c.setpaciente(p);
+            
+            Medico m = new Medico();
+            m.setID(rs.getString(alias + ".id"));
+            c.setMedico(m);
+
+            return c;
+        } catch (SQLException ex) {
+            return null;
+        } 
     }
     
     //---------------------------- CIUDADES ----------------------------
