@@ -27,7 +27,6 @@ public class ControllerCitas extends HttpServlet {
  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
-        //response.setContentType("text/html;charset=UTF-8");
         
         
         request.setAttribute("model", new ModelCitas());
@@ -54,8 +53,14 @@ public class ControllerCitas extends HttpServlet {
         
         Service service = Service.instance();
         HttpSession session = request.getSession(true);
- 
-        Medico medico = (Medico) session.getAttribute("medico");
+        
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Medico medico;
+        try {
+            medico = service.medicoFind(usuario);
+        } catch (Exception ex) { 
+            medico=null; 
+        }
         ArrayList<Cita> citas = (ArrayList<Cita>) service.seachCitasByMedico(medico.getID());
         
             
