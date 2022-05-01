@@ -20,7 +20,14 @@
                 <a  href="">Perfil</a>
             </li>--%>
             <% } %>
-            
+            <%  if (usuario != null) { %>
+                    <% if (Integer.valueOf(usuario.getTipo()) == 1) { %>
+                    <li>
+                        <%--<a href="/SCM/presentation/medico/citas/show">Citas</a>--%>
+                        <a href="/SCM/Views/Medico/citas/ViewCitas.jsp">Citas</a>
+                    </li>
+                    <% } %>
+                    <% } %>
             <% if (usuario == null) {%>
             <li>
                 <a href="/SCM/presentation/login/show">Login</a>
