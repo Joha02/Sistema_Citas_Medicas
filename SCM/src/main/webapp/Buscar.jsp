@@ -53,6 +53,7 @@
                             <tr>
                                 <td><%= c.getDate().split(" ")[0] %></td>
                                 <td><%= c.getDate().split(" ")[1] %></td>
+                                <td> <input type="submit" value="Seleccionar" id="" /></td>
                             </tr>
                             <%}%>
                         </table>
