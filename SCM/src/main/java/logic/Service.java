@@ -126,12 +126,12 @@ public class Service {
         return especialidades;
     }
     
-//    public void AddEspecialidad(String espec) throws Exception {
-//        if (espec != "") { 
-//            especialidades.add(espec);
-//        } 
-//        else { throw new Exception("Error al guardar registro"); }
-//    }
+    public void addEspecialidad(String espec) throws Exception{
+        if (espec != "") { 
+            dao.addEspecialidad(new Especialidad(espec));
+        }
+        else { throw new Exception("No se ha añadido especialidad"); }
+    }
     
     //--------------------------- CIUDAD ---------------------------
     public void AddCiudad(Ciudad ciudad) throws Exception {

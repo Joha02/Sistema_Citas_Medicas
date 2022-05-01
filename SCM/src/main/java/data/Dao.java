@@ -215,6 +215,17 @@ public class Dao {
         }
     }
     
+    public void addEspecialidad(Especialidad e) throws Exception {
+        String sql = "insert into especialidades(name) "
+                + "values(?)";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, e.getEspecialidad());
+        int count = db.executeUpdate(stm);
+        if (count == 0) {
+            throw new Exception("Especialidad ya existe");
+        }
+    }
+    
     //----------------------------- CITAS ----------------------------  
     public Cita readCita(String id) throws Exception {
         String sql = "select * from citas p where id=?";
