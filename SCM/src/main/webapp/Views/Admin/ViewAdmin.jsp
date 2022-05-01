@@ -15,8 +15,8 @@
         <tr><td>Username</td><td><%= adm.getID()%></td></tr>
         <tr><td>Name</td><td><%= adm.getName()%></td></tr>
     </table><br>
-        <h2><a href="/SCM/presentation/admin/ListadoMedicosShow">Listado Medicos</a></h2>
-        <h2><a href="/SCM/presentation/admin/EspecialidadShow">Registrar Especialidad</a></h2>
-        <h2><a href="/SCM/Views/Admin/Ciudad.jsp">Agregar Ciudad</a></h2>
+        <h2><a href="/SCM/presentation/admin/ListadoMedicosShow">Ver/Aceptar Solicitudes de Medicos</a></h2>
+        <h2><a href="/SCM/presentation/admin/EspecialidadShow">Ver/Agregar Especialidades</a></h2>
+        <h2><a href="/SCM/Views/Admin/Ciudad.jsp">Ver/Agregar Ciudades</a></h2>
 
     <%@ include file="/Footer.jsp" %>

@@ -17,7 +17,7 @@ import logic.Service;
 import presentation.admin.ModelAdmin;
 
 @WebServlet(name = "ControllerAdmin", urlPatterns = {"/presentation/admin/show", "/presentation/admin/ListadoMedicosShow", "/presentation/admin/ListadoMedicosUpdate",
-"/presentation/admin/EspecialidadShow"})
+"/presentation/admin/EspecialidadShow", "/presentation/admin/EspecialidadIngresar"})
 public class ControllerAdmin extends HttpServlet{
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response)
@@ -42,9 +42,9 @@ public class ControllerAdmin extends HttpServlet{
 //            case "/presentation/admin/EspecialidadUpdate":
 //                viewUrl = this.EspecialidadUpdate(request);
 //                break;
-//            case "/presentation/admin/EspecialidadIngresar":
-//                viewUrl = this.EspecialidadIngresar(request);
-//                break;
+            case "/presentation/admin/EspecialidadIngresar":
+                viewUrl = this.EspecialidadIngresar(request);
+                break;
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
     }
@@ -94,30 +94,38 @@ public class ControllerAdmin extends HttpServlet{
         return "/Views/Admin/ListadoMedicos.jsp";
     }
     
-    public String EspecialidadShow(HttpServletRequest request) throws SQLException{
+    public String EspecialidadShow(HttpServletRequest request) throws SQLException {
         ModelAdmin model = (ModelAdmin) request.getAttribute("ModelAdmin");
         Service service = Service.instance();
         HttpSession session = request.getSession(true);
 
         List<Especialidad> especialidades = service.getEspecialidades();
-        
+
         request.setAttribute("ModelAdmin", model);
         session.setAttribute("Especialidades", especialidades);
-        try {
-
-            return "/Views/Admin/Especialidad.jsp";
-        } catch (Exception ex) {
-            return "";
-        }
+        
+        return "/Views/Admin/Especialidad.jsp";
     }
     
 //    public String EspecialidadUpdate(HttpServletRequest request){
 //    
 //    }
-//    
-//    public String EspecialidadIngresar(HttpServletRequest request){
-//    
-//    }
+    
+    public String EspecialidadIngresar(HttpServletRequest request) throws Exception {
+        ModelAdmin model = (ModelAdmin) request.getAttribute("ModelAdmin");
+        Service service = Service.instance();
+        try {
+            String espe = request.getParameter("especialidad");
+            service.addEspecialidad(espe);
+
+            model.setEspecialidades(service.getEspecialidades());
+            request.setAttribute("ModelAdmin", model);
+
+            return "/presentation/admin/EspecialidadShow";
+        } catch (Exception e) {
+            return "";
+        }
+    }
     
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
