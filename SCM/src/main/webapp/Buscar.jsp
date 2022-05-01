@@ -45,16 +45,25 @@
                     <td><%= m.getName() %></td>
                     <td>
                         <table>
+                            
                             <tr>
                                 <td>Dia</td>
                                 <td>Hora</td>
                             </tr>
+                            
                             <% for (Cita c : m.getCitas()) {%> 
+                            
                             <tr>
+                                
+                                
                                 <td><%= c.getDate().split(" ")[0] %></td>
                                 <td><%= c.getDate().split(" ")[1] %></td>
-                                <td> <input type="submit" value="Seleccionar" id="" /></td>
+                                <input type = "hidden" name = "id_medico" value= "<%=m.getID()%>" />
+                                <td> <input type="submit" value="Seleccionar" id= "" /></td>
+                                
+                                
                             </tr>
+                            
                             <%}%>
                         </table>
                     </td>

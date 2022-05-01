@@ -6,6 +6,7 @@ public class Paciente extends Usuario {
     public Paciente(){
         super();
         this.tipo = "";
+        
     }
    
     public Paciente(String id){

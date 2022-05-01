@@ -247,4 +247,28 @@ public class Dao {
             throw new Exception("Ciudad ya existe");
         }
     }
+    
+    public Cita searchCita(String id) throws Exception {
+        String sql = "select * from citas ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromCitas(rs, "ci"); 
+        } 
+        else { throw new Exception("Cita no existe"); }
+    }
+
+    public Medico search_Medico(String id) throws Exception {
+        String sql = "select * from medicos ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromMedicos(rs, "ci"); 
+        } 
+        else { throw new Exception("Medico no existe"); }
+    }
+
 }
+

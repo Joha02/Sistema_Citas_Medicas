@@ -46,6 +46,16 @@ public class Service {
         }
     }    
     
+    public Medico search_Medico(String ID) throws Exception{
+        Medico med = dao.search_Medico(ID);
+        if(med != null ){
+            return med;
+        }else{
+            throw new Exception("Error");
+        }
+    } 
+    
+    
     public void AddMedico(String id, String password, String name, String especialidad, int costo, Ciudad ciudad, String direccion, String info) throws Exception {
         if (id != "" && password != "" && name != "") { 
             dao.addMedico(new Medico(id, password, name, especialidad, costo, ciudad, direccion, info)); 
@@ -165,6 +175,14 @@ public class Service {
     }
     
     
+    public Cita search_Cita(String ID) throws Exception{
+        Cita cita = dao.searchCita(ID);
+        if(cita != null ){
+            return cita;
+        }else{
+            throw new Exception("Error");
+        }
+    } 
     
     
 }
