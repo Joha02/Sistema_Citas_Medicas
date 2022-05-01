@@ -126,12 +126,24 @@ public class Service {
         return especialidades;
     }
     
-//    public void AddEspecialidad(String espec) throws Exception {
-//        if (espec != "") { 
-//            especialidades.add(espec);
-//        } 
-//        else { throw new Exception("Error al guardar registro"); }
-//    }
+    public void addEspecialidad(String espec) throws Exception{
+        if (espec != "") { 
+            dao.addEspecialidad(new Especialidad(espec));
+        }
+        else { throw new Exception("Cadena vacia"); }
+    }
+    
+    public List<Ciudad> getCiudades() throws SQLException{
+        ciudades = dao.getCiudades();
+        return ciudades;
+    }
+    
+    public void addCiudad(String ciu) throws Exception{
+        if (ciu != "") { 
+            dao.addCiudad(new Ciudad(ciu));
+        }
+        else { throw new Exception("Cadena vacia"); }
+    }
     
     //--------------------------- CIUDAD ---------------------------
     public void AddCiudad(Ciudad ciudad) throws Exception {
@@ -151,7 +163,7 @@ public class Service {
     } 
     
     public Ciudad CiudadFind(Ciudad ciudad) throws Exception{
-        Ciudad ciu = dao.searchCiudad(ciudad.getName());
+        Ciudad ciu = dao.searchCiudad(ciudad.getCiudad());
         if (ciu != null) 
             return ciu;
         else 

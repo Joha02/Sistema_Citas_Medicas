@@ -247,6 +247,51 @@ public class Dao {
         }
     }
     
+    public void addEspecialidad(Especialidad e) throws Exception {
+        String sql = "insert into especialidades(name) "
+                + "values(?)";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, e.getEspecialidad());
+        int count = db.executeUpdate(stm);
+        if (count == 0) {
+            throw new Exception("La especialidad ya existe");
+        }
+    }
+    
+    public List<Ciudad> getCiudades() throws SQLException {
+        List<Ciudad> ciudades = new ArrayList();
+        try {
+            String sql = "select * from ciudades c";
+            PreparedStatement stm = db.prepareStatement(sql);
+            ResultSet rs = db.executeQuery(stm);
+            while (rs.next()) {
+                ciudades.add(fromCiudad(rs, "c"));
+            } 
+        }catch (SQLException ex) {}
+        return ciudades;
+    }
+    
+    public Ciudad fromCiudad(ResultSet rs, String alias) {
+        try {
+            Ciudad c = new Ciudad();
+            c.setCiudad(rs.getString(alias + ".name"));
+            return c;
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+    
+    public void addCiudad(Ciudad e) throws Exception {
+        String sql = "insert into ciudades(name) "
+                + "values(?)";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, e.getCiudad());
+        int count = db.executeUpdate(stm);
+        if (count == 0) {
+            throw new Exception("La ciudad ya existe");
+        }
+    }
+    
     //----------------------------- CITAS ----------------------------  
     public Cita readCita(String id) throws Exception {
         String sql = "select * from citas p where id=?";
@@ -351,7 +396,7 @@ public class Dao {
     public Ciudad fromCiudads(ResultSet rs, String alias){
         try {
             Ciudad ci = new Ciudad();
-            ci.setName(rs.getString(alias + ".name"));
+            ci.setCiudad(rs.getString(alias + ".name"));
             return ci;
         } catch (SQLException ex) { return null; }
     }
@@ -366,16 +411,4 @@ public class Dao {
         } 
         else { throw new Exception("Ciudad no existe"); }
     }
-    
-    public void addCiudad(Ciudad ci) throws Exception {
-        String sql = "insert into ciudades(name) "
-                + "values (?);";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(2, ci.getName());
-        int count=db.executeUpdate(stm);
-        if (count==0){
-            throw new Exception("Ciudad ya existe");
-        }
-    }
-     
 }

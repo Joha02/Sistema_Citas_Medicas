@@ -8,15 +8,24 @@
     <link rel="icon" href="Images/logo.png">
 </head>
 <body>
-    <%@ include file="/Header.jsp" %>  
-    <h1>Información del admin</h1>
-    <br>
+    <%@ include file="/Header.jsp" %> 
     <table>
-        <tr><td>Username</td><td><%= adm.getID()%></td></tr>
-        <tr><td>Name</td><td><%= adm.getName()%></td></tr>
+        <tbody>
+            <caption><h3>PERFIL ADMINISTRADOR</h3></caption>
+        <tr>
+            <th><h2>Username</h2></th>
+            <th><h2>Name</h2></th>
+        </tr>
+        <tr>
+            <td><h3><%= adm.getID()%></h3></td>
+            <td><h3><%= adm.getName()%></h3></td>
+        </tr>
+        </tbody>
     </table><br>
-        <h2><a href="/SCM/presentation/admin/ListadoMedicosShow">Listado Medicos</a></h2>
-        <h2><a href="/SCM/presentation/admin/EspecialidadShow">Registrar Especialidad</a></h2>
-        <h2><a href="/SCM/Views/Admin/Ciudad.jsp">Agregar Ciudad</a></h2>
+    <div class="center">
+        <h4><a href="/SCM/presentation/admin/ListadoMedicosShow">Ver/Aceptar Solicitudes de Medicos</a></h4>
+        <h4><a href="/SCM/presentation/admin/EspecialidadShow">Ver/Agregar Especialidades</a></h4>
+        <h4><a href="/SCM/presentation/admin/CiudadShow">Ver/Agregar Ciudades</a></h4>
+    </div>
 
     <%@ include file="/Footer.jsp" %>
