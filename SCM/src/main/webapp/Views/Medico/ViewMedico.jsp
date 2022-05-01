@@ -11,19 +11,17 @@
     <%@ include file="/Header.jsp" %>  
     <h1>Información del medico</h1>
     <br>
+    <% if (med.getEstado() == 1) { %>
+            <a  href="">Editar Perfil</a>
+            <% } %>
     <table>
         <tr><td>Username</td><td><%= med.getID()%></td></tr>
         <tr><td>Name</td><td><%= med.getName()%></td></tr>
-        <tr><td>Especialidad</td><td><%= med.getEspecialidad()%></td></tr>
+        <tr><td>Especialty</td><td><%= med.getEspecialidad()%></td></tr>
         <tr><td>Costo</td><td><%= med.getCosto()%></td></tr>
         <tr><td>Ciudad</td><td><%= med.getCiudad()%></td></tr>
         <tr><td>Direccion</td><td><%= med.getDireccion()%></td></tr>
-        <tr><td>Presentacion</td><td><%= med.getInfo()%></td></tr>
-    </table>
-    <br>
-    
-    <% if (med.getEstado() == 1) { %>
-        <a  href="/SCM/Views/Medico/EditarPerfil.jsp">Editar Perfil</a>
-    <% } %>
+        <tr><td>Info</td><td><%= med.getInfo()%></td></tr>
+    </table><br>
 
     <%@ include file="/Footer.jsp" %>
