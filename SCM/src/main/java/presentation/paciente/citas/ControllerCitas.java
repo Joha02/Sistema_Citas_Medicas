@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package presentation.medico.citas;
+package presentation.paciente.citas;
 
+import presentation.paciente.citas.*;
 import logic.Cita;
-import logic.Medico;
+import logic.Paciente;
 import logic.Paciente;
 import logic.Service;
 import logic.Usuario;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "MedicoCitasController", urlPatterns = {"/presentation/medico/citas/show"})
+@WebServlet(name = "PacienteCitasController", urlPatterns = {"/presentation/paciente/citas/show"})
 public class ControllerCitas extends HttpServlet {
 
  
@@ -32,14 +33,15 @@ public class ControllerCitas extends HttpServlet {
         request.setAttribute("ModelCitas", new ModelCitas());
         String viewUrl = "";
         switch (request.getServletPath()) {
-            case "/presentation/medico/citas/show":
-                viewUrl = this.showMedico(request);
+            case "/presentation/paciente/citas/show":
+                viewUrl = this.showPaciente(request);
                 break;
+          
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
     }
     
-    public String showMedico(HttpServletRequest request) throws Exception {
+    public String showPaciente(HttpServletRequest request) throws Exception {
         return this.showAction(request);
     }
     
@@ -49,22 +51,21 @@ public class ControllerCitas extends HttpServlet {
         Service service = Service.instance();
         HttpSession session = request.getSession(true);
         
-        Medico med = (Medico) session.getAttribute("usuario");
-        ArrayList<Cita> citas = (ArrayList<Cita>) service.seachCitasByMedico(med.getID());
+        Paciente pac = (Paciente) session.getAttribute("usuario");
+        ArrayList<Cita> citas = (ArrayList<Cita>) service.seachCitasByPaciente(pac.getID());
 
         System.out.println("sizeArray->"+citas.size());
         for(int i=0;i<=citas.size()-1;i++){
-            citas.get(i).setMedico(med);
+            citas.get(i).setpaciente(pac);
         }
         try {     
-            model.setMedico(med);
+            model.setPaciente(pac);
             model.setCitas(citas);
-            return "/Views/Medico/citas/ViewCitas.jsp";
+            return "/Views/Paciente/citas/ViewCitas.jsp";
         } catch (Exception ex) {
             return "";
         }
     }
-    
     
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
