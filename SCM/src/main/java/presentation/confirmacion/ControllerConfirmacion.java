@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.Cita;
 import logic.Medico;
+import logic.Paciente;
 
-@WebServlet(name = "ControllerConfirmacion", urlPatterns = {"/presentation/confirmacion/show", "/presentation/confirmacion/confirmacion"})
+@WebServlet(name = "ControllerConfirmacion", urlPatterns = {"/presentation/confirmacion/show", "/presentation/confirmacion/agendar"})
 public class ControllerConfirmacion extends HttpServlet {
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response)
@@ -27,39 +29,32 @@ public class ControllerConfirmacion extends HttpServlet {
             case "/presentation/confirmacion/show":
                 viewUrl = this.showAction(request);
                 break;
-            case "/presentation/confirmacion/confirmacion":
-                viewUrl = this.searchAction(request);
+            case "/presentation/confirmacion/agendar":
+                viewUrl = this.agendarAction(request);
                 break;
           
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
     }
 
-    public String searchAction(HttpServletRequest request) {
+    public String agendarAction(HttpServletRequest request) {
         ModelConfirmacion model = (ModelConfirmacion) request.getAttribute("ModelConfirmacion");
         Service service = Service.instance();
 
         try {
-            String especialidades = request.getParameter("Especialidad");
-           
-            if(especialidades == null){
-              
-             especialidades = ""; 
-            
+            String id_cita = request.getParameter("id_cita");
+            Cita cita = service.search_Cita(id_cita);
+            HttpSession session = request.getSession(true);
+            Paciente pat = (Paciente) session.getAttribute("usuario");
+            if(pat == null){
+                return "/presentation/login/show";
             }
-            
-            
-            
-            
-            
-            Medico medico = service.search_Medico();
-            
-            for (Medico m: medicos){
-                 m.setCitas(service.searchCita(m.getID()));
-            }
-            
+            cita.setpaciente(pat);
+            service.agendarCita(cita);
+            Medico medico = service.search_Medico(cita.getMedico().getID());
+            model.setCita(cita);
+            model.setCurrent(pat);
             model.setMedico(medico);
-            
             return "/Confirmacion.jsp";
             
         } catch (Exception ex) {

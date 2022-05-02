@@ -43,5 +43,10 @@ public class ModelConfirmacion {
         this.current = current;
     }
 
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
    
+    
 }

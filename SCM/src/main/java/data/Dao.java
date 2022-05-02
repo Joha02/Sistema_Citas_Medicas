@@ -186,7 +186,8 @@ public class Dao {
             c.setDate(rs.getString(alias + ".date"));
             c.setEstado(rs.getString(alias + ".estado")); 
             c.setAnotaciones(rs.getString(alias + ".anotaciones"));
-            c.setMedico(new Medico(rs.getString(alias + ".id_medico")));
+            c.setMedico(new Medico("1"));
+            c.getMedico().setID(rs.getString(alias + ".id_medico"));
             c.setpaciente(new Paciente(rs.getString(alias + ".id_paciente")));
             return c;
         } catch (SQLException ex) { return null; }
@@ -268,6 +269,17 @@ public class Dao {
             return fromMedicos(rs, "ci"); 
         } 
         else { throw new Exception("Medico no existe"); }
+    }
+
+    public void agendarCita(Cita cita) throws Exception {
+        String sql = "update citas set id_paciente = ?, estado = 'Reservada' where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, cita.getpaciente().getID());
+        stm.setString(2, cita.getId());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Cita no agendada");
+        }
     }
 
 }

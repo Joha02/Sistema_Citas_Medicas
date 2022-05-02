@@ -49,19 +49,20 @@
                             <tr>
                                 <td>Dia</td>
                                 <td>Hora</td>
+                                <td></td>
                             </tr>
                             
                             <% for (Cita c : m.getCitas()) {%> 
                             
                             <tr>
-                                
-                                
                                 <td><%= c.getDate().split(" ")[0] %></td>
                                 <td><%= c.getDate().split(" ")[1] %></td>
-                                <input type = "hidden" name = "id_medico" value= "<%=m.getID()%>" />
-                                <td> <input type="submit" value="Seleccionar" id= "" /></td>
-                                
-                                
+                                <td> 
+                                    <form action = "/SCM/presentation/confirmacion/agendar" method = "GET">
+                                        <input type = "hidden" name = "id_cita" value= "<%=c.getId() %>" />
+                                      <input type="submit" value="Agendar"/>
+                                    </form>
+                                </td>
                             </tr>
                             
                             <%}%>

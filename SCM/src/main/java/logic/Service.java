@@ -183,6 +183,10 @@ public class Service {
             throw new Exception("Error");
         }
     } 
+
+    public void agendarCita(Cita cita) throws Exception {
+        dao.agendarCita(cita);
+    }
     
     
 }
