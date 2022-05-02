@@ -42,18 +42,29 @@
             <table>  
                 <% for (Medico m : model.getMedicos()) {%> 
                 <tr>
-                    <td><%= m.getName() %></td>
+                    <td><%=m.getName() %> - <%=m.getEspecialidad() %> - <%=m.getCiudad().getName() %></td>
                     <td>
                         <table>
+                            
                             <tr>
                                 <td>Dia</td>
                                 <td>Hora</td>
+                                <td></td>
                             </tr>
+                            
                             <% for (Cita c : m.getCitas()) {%> 
+                            
                             <tr>
                                 <td><%= c.getDate().split(" ")[0] %></td>
                                 <td><%= c.getDate().split(" ")[1] %></td>
+                                <td> 
+                                    <form action = "/SCM/presentation/confirmacion/agendar" method = "GET">
+                                        <input type = "hidden" name = "id_cita" value= "<%=c.getId() %>" />
+                                      <input type="submit" value="Agendar"/>
+                                    </form>
+                                </td>
                             </tr>
+                            
                             <%}%>
                         </table>
                     </td>

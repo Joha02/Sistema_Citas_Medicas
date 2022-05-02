@@ -310,7 +310,8 @@ public class Dao {
             c.setDate(rs.getString(alias + ".date"));
             c.setEstado(rs.getString(alias + ".estado")); 
             c.setAnotaciones(rs.getString(alias + ".anotaciones"));
-            c.setMedico(new Medico(rs.getString(alias + ".id_medico")));
+            c.setMedico(new Medico("1"));
+            c.getMedico().setID(rs.getString(alias + ".id_medico"));
             c.setpaciente(new Paciente(rs.getString(alias + ".id_paciente")));
             return c;
         } catch (SQLException ex) { return null; }
@@ -411,4 +412,50 @@ public class Dao {
         } 
         else { throw new Exception("Ciudad no existe"); }
     }
+    
+    public void addCiudad(Ciudad ci) throws Exception {
+        String sql = "insert into ciudades(id, name,) "
+                + "values (?,?);";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, ci.getID());
+        stm.setString(2, ci.getName());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Ciudad ya existe");
+        }
+    }
+    
+    public Cita searchCita(String id) throws Exception {
+        String sql = "select * from citas ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromCitas(rs, "ci"); 
+        } 
+        else { throw new Exception("Cita no existe"); }
+    }
+
+    public Medico search_Medico(String id) throws Exception {
+        String sql = "select * from medicos ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromMedicos(rs, "ci"); 
+        } 
+        else { throw new Exception("Medico no existe"); }
+    }
+
+    public void agendarCita(Cita cita) throws Exception {
+        String sql = "update citas set id_paciente = ?, estado = 'Reservada' where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, cita.getpaciente().getID());
+        stm.setString(2, cita.getId());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Cita no agendada");
+        }
+    }
 }
+
