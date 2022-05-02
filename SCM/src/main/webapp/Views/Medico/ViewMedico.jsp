@@ -42,6 +42,10 @@
                 <h3><a  href="/SCM/presentation/medico/editarPerfilShow">Editar Perfil</a></h3>
                 <% }%>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
         <%@ include file="/Footer.jsp" %>
     </body>

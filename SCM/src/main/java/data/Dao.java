@@ -171,19 +171,16 @@ public void addMedico(Medico m) throws Exception {
         }
     }
     
-    public ArrayList<Cita> readByPaciente(String cedula) throws Exception {
-        ArrayList<Cita> resultado = new ArrayList<>();
-        String sql = "select * from citas c inner join medicos m on c.id_medico= m.id "
-                    + " where c.id_paciente=? order by m.name desc";
+    public ArrayList<Cita> readByPaciente(String id) throws Exception {
+     ArrayList<Cita> resultado = new ArrayList<>();
+        String sql = "select * from citas c where c.id_paciente=? ";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setObject(1, cedula);
+        stm.setString(1, id);
         ResultSet rs = db.executeQuery(stm);
-        Cita c;
-     
-        while (rs.next()) {
-                c = fromCita1(rs, "c");
-                resultado.add(c);
-            }
+        
+        while (rs.next()) { 
+            resultado.add(fromCitas1(rs, "c")); 
+        } 
         return resultado;
     }
     
@@ -191,17 +188,12 @@ public void addMedico(Medico m) throws Exception {
         ArrayList<Cita> resultado = new ArrayList<>();
         String sql = "select * from citas c where c.id_medico=? ";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setObject(1, id);
+        stm.setString(1, id);
         ResultSet rs = db.executeQuery(stm);
         
         while (rs.next()) { 
             resultado.add(fromCitas(rs, "c")); 
         } 
-        /*Cita c;
-        while (rs.next()) {
-                c = fromCita2(rs, "c");
-                resultado.add(c);
-            }*/
         return resultado;
     }
     //----------------------------- ADMINISTRADORES -----------------------------
@@ -333,12 +325,29 @@ public void addMedico(Medico m) throws Exception {
             Cita c = new Cita();
             c.setId(rs.getString(alias + ".id"));
             c.setDate(rs.getString(alias + ".date"));
-            c.setTime(rs.getString(alias + ".time"));
+            //c.setTime(rs.getString(alias + ".time"));
             c.setEstado(rs.getString(alias + ".estado")); 
             c.setAnotaciones(rs.getString(alias + ".anotaciones"));
             c.setMedico(new Medico("1"));
             c.getMedico().setID(rs.getString(alias + ".id_medico"));
             c.setpaciente(new Paciente(rs.getString(alias + ".id_paciente")));
+            return c;
+        } catch (SQLException ex) { return null; }
+    }
+    public Cita fromCitas1(ResultSet rs, String alias){
+        //id,date,estado,anotaciones, id_medico,id_paciente
+        try {
+            Cita c = new Cita();
+            c.setId(rs.getString(alias + ".id"));
+            c.setDate(rs.getString(alias + ".date"));
+            //c.setTime(rs.getString(alias + ".time"));
+            c.setEstado(rs.getString(alias + ".estado")); 
+            c.setAnotaciones(rs.getString(alias + ".anotaciones"));
+            c.setpaciente(new Paciente("2"));
+            c.getpaciente().setID(rs.getString(alias + ".id_paciente"));
+            c.getMedico().setID(rs.getString(alias + ".id_medico"));
+            c.setMedico(new Medico(rs.getString(alias + ".id_medico")));
+
             return c;
         } catch (SQLException ex) { return null; }
     }

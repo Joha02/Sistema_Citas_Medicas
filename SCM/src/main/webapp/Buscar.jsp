@@ -16,7 +16,7 @@
     <body>
         <%@ include file="/Header.jsp" %>
         <div>
-            <h1>&bull; Indicar Datos Compra&bull;</h1>
+            <h1>&bull; Buscar Citas&bull;</h1>
             <form action = "/SCM/presentation/buscar/buscar" method = "GET">
                 <div class="name">
                     <label for="subject"></label>
