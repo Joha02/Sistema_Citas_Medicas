@@ -10,11 +10,11 @@ public class Ciudad {
         this.name = name;
     }
     
-    public String getName() {
+    public String getCiudad() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setCiudad(String name) {
         this.name = name;
     }
 

@@ -16,9 +16,6 @@
             <li >
                 <a  href="/SCM/presentation/login/logout">Logout</a>
             </li> 
-            <%--<li >
-                <a  href="">Perfil</a>
-            </li>--%>
             <% } %>
             <%  if (usuario != null) { %>
                     <% if (Integer.valueOf(usuario.getTipo()) == 1) { %>
