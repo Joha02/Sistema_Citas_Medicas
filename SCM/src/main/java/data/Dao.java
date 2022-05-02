@@ -50,7 +50,7 @@ public class Dao {
     }
     
     public Medico searchMedico(String id) throws Exception {
-        String sql = "select from * medicos m where id=?";
+        String sql = "select * from medicos m where id=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, id);
         ResultSet rs = db.executeQuery(stm);
@@ -89,6 +89,25 @@ public class Dao {
 
          return medicosDisponibles;
 
+    }
+     
+    public void updateMed(Medico m) throws SQLException, Exception{
+        String sql="update medicos set password=?, name=?, especialidad=?, costo=?, ciudad=?, direccion=?, tipo=?, info=?, estado=? where id=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, m.getPassword()); 
+        stm.setString(2, m.getName()); 
+        stm.setString(3, m.getEspecialidad()); 
+        stm.setInt(4, m.getCosto()); 
+        stm.setString(5, m.getCiudad().getCiudad()); 
+        stm.setString(6, m.getDireccion()); 
+        stm.setString(7, m.getTipo()); 
+        stm.setString(8, m.getInfo()); 
+        stm.setInt(9, m.getEstado());
+        stm.setString(10, m.getID());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Medico no se actualizo");
+        } 
     }
      
     //---------------------------- PACIENTES ----------------------------

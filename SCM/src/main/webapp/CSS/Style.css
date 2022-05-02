@@ -71,8 +71,8 @@ input[type=text].error,input[type=password].error{
 .buttonClass {
   font-size:15px;
   font-family:Arial;
-  width:210px;
-  height:900px;
+  width:200px;
+  height:70px;
   border-width:2px;
   color: darkgray;
   border-color: darkgray;
@@ -106,4 +106,12 @@ input[type=text].error,input[type=password].error{
 .city {
  float: right;
 width: 45%;
+}
+
+.perfil {
+    height: 98px
+}
+
+.tableCenter{
+    margin: 0 auto;
 }

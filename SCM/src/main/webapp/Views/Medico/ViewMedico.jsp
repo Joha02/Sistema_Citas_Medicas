@@ -1,29 +1,54 @@
+<%@page import="logic.Hora"%>
+<%@page import="java.util.List"%>
 <%@ page import="logic.Medico,java.text.SimpleDateFormat" %>
 <% Medico med = (Medico) session.getAttribute("usuario");
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
-<head>
-    <link rel="icon" href="${pageContext.request.contextPath}/Images/medico.png">
-    <%@ include file="/Head.jsp" %>
-    <title>SCM</title>
-    <link rel="icon" href="Images/logo.png">
-</head>
-<body>
-    <%@ include file="/Header.jsp" %>  
-    <h1>Información del medico</h1>
-    <br>
-    <table>
-        <tr><td>Username</td><td><%= med.getID()%></td></tr>
-        <tr><td>Name</td><td><%= med.getName()%></td></tr>
-        <tr><td>Especialidad</td><td><%= med.getEspecialidad()%></td></tr>
-        <tr><td>Costo</td><td><%= med.getCosto()%></td></tr>
-        <tr><td>Ciudad</td><td><%= med.getCiudad()%></td></tr>
-        <tr><td>Direccion</td><td><%= med.getDireccion()%></td></tr>
-        <tr><td>Presentacion</td><td><%= med.getInfo()%></td></tr>
-    </table>
-    <br>
-    
-    <% if (med.getEstado() == 1) { %>
-        <a  href="/SCM/Views/Medico/EditarPerfil.jsp">Editar Perfil</a>
-    <% } %>
-
-    <%@ include file="/Footer.jsp" %>
+    SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
+<html>
+    <head>
+        <link rel="icon" href="${pageContext.request.contextPath}/Images/medico.png">
+        <%@ include file="/Head.jsp" %>
+        <title>SCM</title>
+    </head>
+    <body>
+        <%@ include file="/Header.jsp" %>  
+        <div><div class="center"><h1>Información del medico</h1></div>
+            <br>
+            <table>
+                <tr><td>ID</td><td><%= med.getID()%></td></tr>
+                <tr><td>Nombre</td><td><%= med.getName()%></td></tr>
+                <% if(med.getCosto() == 0){%>
+                <tr><td>Costo</td><td><%= med.getCosto()%></td></tr>
+                <%} if(med.getDireccion().isEmpty()){%>
+                <tr><td>Direccion</td><td><%= med.getDireccion()%></td></tr>
+                <%} if(med.getInfo().isEmpty()){%>
+                <tr><td>Presentacion</td><td><%= med.getInfo()%></td></tr>
+                <%} if(med.getEspecialidad().isEmpty()){%>
+                <tr><td>Especialidad</td><td><%= med.getEspecialidad()%></td></tr>
+                <%} if((med.getCiudad().getCiudad().isEmpty())){%>
+                <tr><td>Localidad</td><td><%= med.getCiudad()%></td></tr>
+                <%} if(med.getDias() != null){%>
+                <tr><td>Dias Laborales</td></tr>
+                <% 
+                    List<String> dias = med.getDias();
+                    for(int i = 0; i < dias.size(); i++){
+                %>
+                <tr><td><%=dias.get(i)%></td></tr>
+                <%}} if(med.getHoras() != null){%>
+                <tr><td>Horario</td><tr>
+                <% 
+                    List<Hora> horas = med.getHoras();
+                    for(int i = 0; i < horas.size(); i++){
+                %>
+                <tr><td><%=horas.get(i)%></td></tr>
+                <%}}%>
+            </table>
+            <br>
+            <div class="center">
+                <% if (med.getEstado() == 1) { %>
+                <h3><a  href="/SCM/presentation/medico/editarPerfilShow">Editar Perfil</a></h3>
+                <% }%>
+            </div>
+        </div>
+        <%@ include file="/Footer.jsp" %>
+    </body>
+</html>

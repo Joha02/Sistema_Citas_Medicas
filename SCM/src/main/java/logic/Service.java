@@ -11,7 +11,8 @@ public class Service {
     private List<Medico> registros = new ArrayList();
     private List<Especialidad> especialidades = new ArrayList();
     private List<Ciudad> ciudades = new ArrayList();
-    
+    private List<Integer> frecuencias = new ArrayList();
+    private List<Integer> costos = new ArrayList();
     
     public static Service instance(){
         if(Instance == null){
@@ -22,11 +23,20 @@ public class Service {
     
     
     public Service() {
-        try{
-            dao = new Dao();
-        }
-        catch(Exception e){
-        }
+        try{ dao = new Dao(); } catch(Exception e){}
+        frecuencias.add(15);frecuencias.add(20);frecuencias.add(30);frecuencias.add(45);
+        frecuencias.add(1);frecuencias.add(2);frecuencias.add(3);frecuencias.add(4);
+        
+        costos.add(10000);costos.add(25000);costos.add(35000);costos.add(45000);costos.add(50000);
+        costos.add(100000);costos.add(150000);costos.add(200000);costos.add(250000);costos.add(300000);
+    }
+    
+    public List<Integer> getFrecuencias(){
+        return frecuencias;
+    }
+    
+    public List<Integer> getCostos(){
+        return costos;
     }
     
     //--------------------------- MEDICO ---------------------------
@@ -99,6 +109,9 @@ public class Service {
         else { throw new Exception("No se ha añadido usuario"); }
     }
     
+    public void updateMedico(Medico m)throws Exception{
+        dao.updateMed(m);
+    }
     //--------------------------- ADMINISTRADOR ---------------------------
     public Admin searchAdmin(String ID, String password) throws Exception{
         Admin ad = dao.searchAdmin(ID);
