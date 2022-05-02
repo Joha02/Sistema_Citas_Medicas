@@ -349,7 +349,7 @@ public class Dao {
             Medico m = new Medico();
             //Ciudad
             Ciudad ciu = new Ciudad();
-            ciu.setName(rs.getString("m.name"));
+            ciu.setCiudad(rs.getString("m.name"));
             //Especialidad
             Especialidad esp = new Especialidad();
             esp.setEspecialidad(rs.getString("m.name"));

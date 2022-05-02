@@ -21,16 +21,21 @@
         <%@ include file="/Header.jsp" %>
         
         <div> <% for(Cita c:citas){%>
+            <div>
     <table>
-        <tr><td>IID</td><td><%= c.getId()%></td></tr>
+        <tr><td>ID</td><td><%= c.getId()%></td></tr>
         <tr><td>Medico</td><td><%= med.getName()%></td></tr>
         <tr><td>Especialty</td><td><%= med.getEspecialidad()%></td></tr>
         <tr><td>Costo</td><td><%= med.getCosto()%></td></tr>
-        <tr><td>Ciudad</td><td><%= med.getCiudad()%></td></tr>
-        <tr><td>Paciente</td><td><%= c.getpaciente()%></td></tr>
+        <tr><td>Ciudad</td><td><%= med.getCiudad().getCiudad()%></td></tr>
+        <tr><td>Paciente</td><td><%= c.getpaciente().getName()%></td></tr>
         <tr><td>Fecha</td><td><%= c.getDate()%></td></tr>
         <tr><td>Hora</td><td><%= c.getTime()%></td></tr>
     </table>
+    <div>
+        <br>
+        <br>
+        <br>
     <%}%></div>
 
                 <%--<a href="/proyecto1P4/presentation/medico/citas/cancelarCita?citaId=<%=citas.get(i).getIdCita()%>" class="btn btn-primary">Cancelar</a>--%>
