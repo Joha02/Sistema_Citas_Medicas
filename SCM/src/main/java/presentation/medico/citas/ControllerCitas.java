@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "MedicoCitasController", urlPatterns = {"/presentation/medico/citas/cancelarCita","/presentation/medico/citas/show","/presentation/paciente/citas/show"})
+@WebServlet(name = "MedicoCitasController", urlPatterns = {"/presentation/medico/citas/show"})
 public class ControllerCitas extends HttpServlet {
 
  
@@ -35,12 +35,6 @@ public class ControllerCitas extends HttpServlet {
             case "/presentation/medico/citas/show":
                 viewUrl = this.showMedico(request);
                 break;
-            /*case "/presentation/paciente/citas/show":
-                viewUrl = this.showPaciente(request);
-                break;
-            /*case "/presentation/medico/citas/cancelarCita":
-                viewUrl = this.cancelarCitaMedico(request);
-                break;*/
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
     }
@@ -70,40 +64,6 @@ public class ControllerCitas extends HttpServlet {
             return "";
         }
     }
-    
-    /*public String showPaciente(HttpServletRequest request) throws Exception{
-        
-        Service service = Service.instance();
-        HttpSession session = request.getSession(true);
- 
-        Paciente paciente = (Paciente) session.getAttribute("paciente");
-        ArrayList<Cita> citas = (ArrayList<Cita>) service.seachCitasByPaciente(paciente.getID());
-        
-            
-        for(int i=0;i<=citas.size()-1;i++){
-            citas.get(i).setpaciente(paciente);
-            
-        }
-        
-        session.setAttribute("citasList", citas);
-        
-        return "/presentation/paciente/cita/view.jsp";
-    }
-    
-    /*public String cancelarCitaMedico(HttpServletRequest request) throws Exception{
-        
-        Service service = Service.instance();
-        HttpSession session = request.getSession(true);
- 
-        String idCita = request.getParameter("citaId");
-        System.out.println("IDCITA->"+idCita);
-        //Cita paciente = service.findPaciente(idPaciente);
-//        Paciente paciente = (Paciente) session.getAttribute("paciente");
-
-        service.eliminarCita(idCita);
-        
-        return "/presentation/medico/citas/view.jsp";
-    }*/
     
     
 

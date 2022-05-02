@@ -65,11 +65,14 @@ public class Cita {
     public void setTime(String time) {
         this.time = time;
     }
+    //----Devolver objeto
      public Medico getMedic() {
         return medico;
     }
     
-
+     public Paciente getPacient(){
+         return paciente;
+     }
     public String getEstado() {
         return estado;
     }

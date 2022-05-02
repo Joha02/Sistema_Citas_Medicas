@@ -30,7 +30,6 @@
         <tr><td>Ciudad</td><td><%= med.getCiudad().getCiudad()%></td></tr>
         <tr><td>Paciente</td><td><%= c.getpaciente().getName()%></td></tr>
         <tr><td>Fecha</td><td><%= c.getDate()%></td></tr>
-        <tr><td>Hora</td><td><%= c.getTime()%></td></tr>
     </table>
     <div>
         <br>

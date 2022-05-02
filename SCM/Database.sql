@@ -28,12 +28,11 @@ alter table admins add constraint admins_pk primary key (id);
 insert into admins (id, password, name, tipo) values ("333","333","Llerym Choi","3");
 
 -- --------------------------CITAS-------------------------------------------------------
-create table citas(id varchar(10) not null,  date varchar(50) not null, time varchar(50) not null,estado varchar(10) not null, anotaciones varchar(100),  id_medico varchar(10) not null, id_paciente varchar(10));
+create table citas(id varchar(10) not null,  date varchar(50) not null,estado varchar(10) not null, anotaciones varchar(100) not null,  id_medico varchar(10) not null, id_paciente varchar(10));
 
 alter table citas add constraint citas_pk primary key (id);
 
-insert into citas (id,date, time, estado,anotaciones, id_medico,id_paciente) values ('1', '25/03/2022', '2.pm',  'Disponible', ' ', '111', "222");
-insert into citas (id,date, time, estado,anotaciones, id_medico,id_paciente) values ('2', '25/03/2022', '4.pm',  'Disponible', ' ', '111', null);
+insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('1', '25/03/2022 2.pm', 'Disponible', ' ', '111', null);
 
 -- ------------------------------------------CIUDAD-------------------------------------------
 create table ciudades(id varchar(10) not null, name varchar(50) not null, provincia varchar(50) not null);
