@@ -6,16 +6,33 @@
 
 <%@page import="presentation.confirmacion.ModelConfirmacion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link href="/SCM/CSS/Form.css" rel="stylesheet" type="text/css" /> 
 <% ModelConfirmacion model = (ModelConfirmacion) request.getAttribute("ModelConfirmacion");
 %>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+        <%@ include file="/Head.jsp" %>
+        <title>Confirmacion</title>
     </head>
     <body>
-       <h1>&bull; Confirmación exitosa&bull;</h1>
-       <%= model.getCita().getDate() %>
+         <%@ include file="/Header.jsp" %>
+         <table>  
+            <tr>
+                <th colspan="2">&bull; Confirmación exitosa&bull;</th>
+            </tr>
+            <tr>
+                <td> <b> Horario: </b></td>
+                <td><%= model.getCita().getDate().split(" ")[0] %> - <%= model.getCita().getDate().split(" ")[1] %></td>
+            </tr>
+            <tr>
+                <td> <b> Medico </b></td>
+                <td><%= model.getMedico().getName() %> - <%= model.getMedico().getEspecialidad() %> - <%= model.getMedico().getCiudad().getName() %></td>
+            </tr>
+             <tr>
+                <td> <b> Paciente </b></td>
+                <td><%= model.getCurrent().getName() %></td>
+            </tr>
+       </table>
     </body>
 </html>

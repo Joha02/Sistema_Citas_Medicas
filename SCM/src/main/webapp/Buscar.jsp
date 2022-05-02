@@ -42,7 +42,7 @@
             <table>  
                 <% for (Medico m : model.getMedicos()) {%> 
                 <tr>
-                    <td><%= m.getName() %></td>
+                    <td><%=m.getName() %> - <%=m.getEspecialidad() %> - <%=m.getCiudad().getName() %></td>
                     <td>
                         <table>
                             
