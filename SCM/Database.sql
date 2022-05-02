@@ -32,7 +32,7 @@ create table citas(id varchar(10) not null,  date varchar(50) not null,estado va
 
 alter table citas add constraint citas_pk primary key (id);
 
-insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('1', '25/03/2022 2.pm', 'Disponible', ' ', '111', null);
+insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('1', '25/03/2022 2.pm', 'Disponible', ' ', '444', "222");
 
 -- ------------------------------------------CIUDAD-------------------------------------------
 create table ciudades(id varchar(10) not null, name varchar(50) not null, provincia varchar(50) not null);
@@ -55,3 +55,4 @@ select* from medicos;
 select * from admins;
 
 select * from citas c where c.id_medico="111" ;
+select * from citas c where c.id_paciente="222" 
