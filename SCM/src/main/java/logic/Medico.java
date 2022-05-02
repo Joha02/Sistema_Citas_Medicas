@@ -7,6 +7,7 @@ public class Medico extends Usuario {
     int costo;
     Ciudad ciudad;
     String direccion;
+    String tipo;
     String info;
     int estado;
     List<Cita> citas; 
@@ -17,7 +18,7 @@ public class Medico extends Usuario {
     }
     
     public Medico(String ID, String password, String name, String especialidad, int costo, Ciudad ciudad, String direccion, String info) {
-        super(ID, password, name, "1");
+        super(ID, password, name);
         this.especialidad = especialidad;
         this.costo = costo;
         this.ciudad = ciudad;
@@ -34,7 +35,7 @@ public class Medico extends Usuario {
     }
 
     public Medico( String ID, String password, String name) {
-        super(ID, password, name, "1");
+        super(ID, password, name);
         this.tipo = "1";
         this.estado = 0;
         this.dias = null;
@@ -72,6 +73,14 @@ public class Medico extends Usuario {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getInfo() {

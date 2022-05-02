@@ -1,7 +1,6 @@
 <%@ page import="logic.Paciente,java.text.SimpleDateFormat" %>
-<% 
-    Paciente pat = (Paciente) session.getAttribute("usuario");
-%>
+<% Paciente pat = (Paciente) session.getAttribute("usuario");
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
 <head>
     <link rel="icon" href="${pageContext.request.contextPath}/Images/paciente.png">
     <%@ include file="/Head.jsp" %>
@@ -18,7 +17,6 @@
     </table><br>
 
     <%@ include file="/Footer.jsp" %>
-</body>
 
 <%--
 <!DOCTYPE html>

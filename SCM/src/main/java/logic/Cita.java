@@ -8,24 +8,20 @@ public class Cita {
     private Medico medico;
     private Paciente paciente;
     private String date;
-    private String time;
     private String estado;
     private String anotaciones;
 
     public Cita() {
     }
 
-    public Cita(String ID, Medico medico, Paciente paciente, String date, String estado, String anotaciones) {
-        this.ID = ID;
+    public Cita(Medico medico, Paciente paciente, String ID, String estado, String anotaciones, String date) {
         this.medico = medico;
         this.paciente = paciente;
-        this.date = date;
-
         this.estado = estado;
         this.anotaciones = anotaciones;
+        this.date = date; 
     }
 
-    
     public String getId() {
         return ID;
     }
@@ -58,21 +54,6 @@ public class Cita {
         this.date = date;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-    //----Devolver objeto
-     public Medico getMedic() {
-        return medico;
-    }
-    
-     public Paciente getPacient(){
-         return paciente;
-     }
     public String getEstado() {
         return estado;
     }
