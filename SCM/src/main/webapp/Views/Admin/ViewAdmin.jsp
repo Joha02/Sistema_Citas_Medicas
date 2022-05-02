@@ -1,6 +1,8 @@
 <%@ page import="logic.Admin,java.text.SimpleDateFormat" %>
 <% Admin adm = (Admin) session.getAttribute("usuario");
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
+            
+            <html>
 <head>
     <link rel="icon" href="${pageContext.request.contextPath}/Images/administrador.png">
     <%@ include file="/Head.jsp" %>
@@ -29,3 +31,5 @@
     </div>
 
     <%@ include file="/Footer.jsp" %>
+</body>
+    </html>

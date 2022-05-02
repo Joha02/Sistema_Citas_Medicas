@@ -159,6 +159,14 @@ public class Service {
         else { throw new Exception("Cadena vacia"); }
     }
     
+    public Admin adminFind(Usuario usuario) throws Exception{
+        Admin adm = dao.searchAdmin(usuario.getID());
+        if (adm != null) 
+            return adm;
+        else 
+            throw new Exception("Admin no existe");
+    }    
+    
     //--------------------------- CIUDAD ---------------------------
     public void AddCiudad(Ciudad ciudad) throws Exception {
         if (ciudad != null) { 
