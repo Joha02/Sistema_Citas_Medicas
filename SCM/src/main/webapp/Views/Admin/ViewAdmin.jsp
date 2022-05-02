@@ -1,5 +1,5 @@
 <%@ page import="logic.Admin,java.text.SimpleDateFormat" %>
-<% Admin adm = (Admin) session.getAttribute("usuario");
+<% Admin adm = (Admin) session.getAttribute("admin");
     SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
 <html>
     <head>

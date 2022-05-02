@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.Admin;
 import logic.Ciudad;
 import logic.Especialidad;
 import logic.Medico;
 import logic.Service;
+import logic.Usuario;
 import presentation.admin.ModelAdmin;
 
 @WebServlet(name = "ControllerAdmin", urlPatterns = {"/presentation/admin/show", "/presentation/admin/ListadoMedicosShow", "/presentation/admin/ListadoMedicosUpdate",
@@ -59,9 +61,19 @@ public class ControllerAdmin extends HttpServlet{
 
     public String showAction(HttpServletRequest request) {
         ModelAdmin model = (ModelAdmin) request.getAttribute("ModelAdmin");
-        model.getAdmin().setID("");
-        model.getAdmin().setPassword("");
-        return "/Views/Admin/ViewAdmin.jsp";
+        Service service = Service.instance();
+        HttpSession session = request.getSession(true);
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Admin admin;
+        try {
+            admin = service.adminFind(usuario);
+            model.setAdmin(admin);
+            request.setAttribute("ModelAdmin", model);
+            session.setAttribute("admin", admin);
+            session.setAttribute("ModelAdmin", model);
+        
+            return "/Views/Admin/ViewAdmin.jsp";
+        } catch (Exception ex) { return "/ViewError.jsp"; }
     }
     
     public String ListadoMedicosShow(HttpServletRequest request) throws SQLException{

@@ -123,6 +123,14 @@ public class Service {
         }
     } 
     
+    public Admin adminFind(Usuario usuario) throws Exception{
+        Admin ad = dao.searchAdmin(usuario.getID());
+        if (ad != null) 
+            return ad;
+        else 
+            throw new Exception("Admin no existe");
+    } 
+    
     public List<Medico> getRegistros() throws SQLException{
         registros = dao.getRegistros(0);
         return registros;
