@@ -50,7 +50,7 @@ public class Dao {
     }
     
     public Medico searchMedico(String id) throws Exception {
-        String sql = "select from * medicos m where id=?";
+        String sql = "select * from medicos m where id=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, id);
         ResultSet rs = db.executeQuery(stm);
@@ -108,6 +108,7 @@ public class Dao {
             p.setID(rs.getString(alias + ".id"));
             p.setPassword(rs.getString(alias + ".password"));
             p.setName(rs.getString(alias + ".name"));
+            p.setTipo("2");
             return p;
         } catch (SQLException ex) { return null; }
     }
@@ -283,17 +284,6 @@ public class Dao {
         }
     }
     
-    public void addCiudad(Ciudad e) throws Exception {
-        String sql = "insert into ciudades(name) "
-                + "values(?)";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, e.getCiudad());
-        int count = db.executeUpdate(stm);
-        if (count == 0) {
-            throw new Exception("La ciudad ya existe");
-        }
-    }
-    
     //----------------------------- CITAS ----------------------------  
     public Cita readCita(String id) throws Exception {
         String sql = "select * from citas p where id=?";
@@ -313,7 +303,8 @@ public class Dao {
             c.setTime(rs.getString(alias + ".time"));
             c.setEstado(rs.getString(alias + ".estado")); 
             c.setAnotaciones(rs.getString(alias + ".anotaciones"));
-            c.setMedico(new Medico(rs.getString(alias + ".id_medico")));
+            c.setMedico(new Medico("1"));
+            c.getMedico().setID(rs.getString(alias + ".id_medico"));
             c.setpaciente(new Paciente(rs.getString(alias + ".id_paciente")));
             return c;
         } catch (SQLException ex) { return null; }
@@ -414,4 +405,59 @@ public class Dao {
         } 
         else { throw new Exception("Ciudad no existe"); }
     }
+    
+     public List<Ciudad> allCiudades() throws Exception {
+        String sql = "select * from ciudades c";
+        PreparedStatement stm = db.prepareStatement(sql);
+        ResultSet rs = db.executeQuery(stm);
+        List<Ciudad> ciudades = new ArrayList();
+        while (rs.next()) { ciudades.add(fromCiudad(rs, "c")); } 
+        return ciudades;
+    }
+    
+    public void addCiudad(Ciudad ci) throws Exception {
+        String sql = "insert into ciudades(id, name) "
+                + "values (?, ?);";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, String.valueOf(this.allCiudades().size()+1));
+        stm.setString(2, ci.getCiudad());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Ciudad ya existe");
+        }
+    }
+    
+    public Cita searchCita(String id) throws Exception {
+        String sql = "select * from citas ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromCitas(rs, "ci"); 
+        } 
+        else { throw new Exception("Cita no existe"); }
+    }
+
+    public Medico search_Medico(String id) throws Exception {
+        String sql = "select * from medicos ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromMedicos(rs, "ci"); 
+        } 
+        else { throw new Exception("Medico no existe"); }
+    }
+
+    public void agendarCita(Cita cita) throws Exception {
+        String sql = "update citas set id_paciente = ?, estado = 'Reservada' where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, cita.getpaciente().getID());
+        stm.setString(2, cita.getId());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Cita no agendada");
+        }
+    }
 }
+
