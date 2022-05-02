@@ -51,7 +51,7 @@ public class ControllerConfirmacion extends HttpServlet {
             }
             cita.setpaciente(pat);
             service.agendarCita(cita);
-            Medico medico = service.search_Medico(cita.getMedico().getID());
+            Medico medico = service.searchMedicoID(cita.getMedico().getID());
             model.setCita(cita);
             model.setCurrent(pat);
             model.setMedico(medico);

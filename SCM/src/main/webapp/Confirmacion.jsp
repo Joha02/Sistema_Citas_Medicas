@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td> <b> Medico </b></td>
-                <td><%= model.getMedico().getName() %> - <%= model.getMedico().getEspecialidad() %> - <%= model.getMedico().getCiudad().getName() %></td>
+                <td><%= model.getMedico().getName() %> - <%= model.getMedico().getEspecialidad() %> - <%= model.getMedico().getCiudad().getCiudad()%></td>
             </tr>
              <tr>
                 <td> <b> Paciente </b></td>
