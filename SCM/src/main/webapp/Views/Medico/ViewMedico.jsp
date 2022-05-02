@@ -1,10 +1,7 @@
 <%@page import="logic.Hora"%>
 <%@page import="java.util.List"%>
 <%@ page import="logic.Medico,java.text.SimpleDateFormat" %>
-<% Medico med = (Medico) session.getAttribute("usuario");
-
-
-    SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
+<% Medico med = (Medico) session.getAttribute("usuario");%>
 <html>
     <head>
         <link rel="icon" href="${pageContext.request.contextPath}/Images/medico.png">
@@ -18,15 +15,10 @@
             <table>
                 <tr><td>ID</td><td><%= med.getID()%></td></tr>
                 <tr><td>Nombre</td><td><%= med.getName()%></td></tr>
-      
                 <tr><td>Costo</td><td><%= med.getCosto()%></td></tr>
-
                 <tr><td>Direccion</td><td><%= med.getDireccion()%></td></tr>
-
                 <tr><td>Presentacion</td><td><%= med.getInfo()%></td></tr>
-
                 <tr><td>Especialidad</td><td><%= med.getEspecialidad()%></td></tr>
-
                 <tr><td>Localidad</td><td><%= med.getCiudad()%></td></tr>
                 <% if(med.getDias() != null){%>
                 <tr><td>Dias Laborales</td></tr>

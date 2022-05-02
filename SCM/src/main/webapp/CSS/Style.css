@@ -71,8 +71,8 @@ input[type=text].error,input[type=password].error{
 .buttonClass {
   font-size:15px;
   font-family:Arial;
-  width:30px;
-  height:50px;
+  width:50px;
+  height:70px;
   border-width:2px;
   color: darkgray;
   border-color: darkgray;

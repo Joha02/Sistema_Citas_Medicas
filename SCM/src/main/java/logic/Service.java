@@ -131,6 +131,11 @@ public class Service {
             throw new Exception("Admin no existe");
     } 
     
+    public List<Medico> getMedicos() throws SQLException{
+        List<Medico> medicos = dao.getMedicos();
+        return medicos;
+    }
+    
     public List<Medico> getRegistros() throws SQLException{
         registros = dao.getRegistros(0);
         return registros;
@@ -161,10 +166,7 @@ public class Service {
     }
     
     public void addCiudad(String ciu) throws Exception{
-        if (ciu != "") { 
-            dao.addCiudad(new Ciudad(ciu));
-        }
-        else { throw new Exception("Cadena vacia"); }
+        dao.addCiudad(new Ciudad(ciu));
     }
     
     public Admin adminFind(Usuario usuario) throws Exception{

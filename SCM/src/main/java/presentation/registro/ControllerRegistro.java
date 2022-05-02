@@ -50,43 +50,47 @@ public class ControllerRegistro extends HttpServlet{
         ModelRegistro model = (ModelRegistro) request.getAttribute("ModelRegistro");
         Service service = Service.instance();
         HttpSession session = request.getSession(true);
-        try {
-            String viewUrl = "";
-            switch (request.getParameter("tipo")) {
-                case "1":
-                    String idM = request.getParameter("IDFld");
-                    String passwordM = request.getParameter("passwordFld");
-                    String nameM = request.getParameter("NomFld");
-                    service.AddMedico(idM, passwordM, nameM);
-                    Medico medico = service.searchMedico(idM, passwordM);  
+        String p1 = request.getParameter("passwordFld");
+        String p2 = request.getParameter("passwordFld2");
+        if (p1.equals(p2)) {
+            try {
+                String viewUrl = "";
+                switch (request.getParameter("tipo")) {
+                    case "1":
+                        String idM = request.getParameter("IDFld");
+                        String passwordM = request.getParameter("passwordFld");
+                        String nameM = request.getParameter("NomFld");
+                        service.AddMedico(idM, passwordM, nameM);
+                        Medico medico = service.searchMedico(idM, passwordM);                        
+                        
+                        service.AddRegistro(medico);
+                        model.setCurrent(medico);
+                        request.setAttribute("ModelRegistro", model);
+                        session.setAttribute("usuario", medico);
+                        viewUrl = "/presentation/medico/show";
+                        break;
                     
-                    service.AddRegistro(medico);
-                    model.setCurrent(medico);
-                    request.setAttribute("ModelRegistro", model);
-                    session.setAttribute("usuario", medico);
-                    viewUrl = "/presentation/medico/show";
-                    break;
-
-                case "2":
-                    String idP = request.getParameter("IDFld");
-                    String passwordP = request.getParameter("passwordFld");
-                    String nameP = request.getParameter("NomFld");
-                    service.AddPaciente(idP, passwordP, nameP);
-                    Paciente paciente = service.searchPaciente(idP, passwordP);                    
-                    session.setAttribute("usuario", paciente);
-                    viewUrl = "/presentation/paciente/show";
-                    break;
+                    case "2":
+                        String idP = request.getParameter("IDFld");
+                        String passwordP = request.getParameter("passwordFld");
+                        String nameP = request.getParameter("NomFld");
+                        service.AddPaciente(idP, passwordP, nameP);
+                        Paciente paciente = service.searchPaciente(idP, passwordP);                        
+                        session.setAttribute("usuario", paciente);
+                        viewUrl = "/presentation/paciente/show";
+                        break;
+                }
+                
+                return viewUrl;
+            } catch (Exception ex) {
+                Map<String, String> errores = new HashMap<>();
+                request.setAttribute("errores", errores);
+                return "/ViewError.jsp";
             }
-            
-            return viewUrl;
-        } catch (Exception ex) {
-            Map<String, String> errores = new HashMap<>();
-            request.setAttribute("errores", errores);
+        } else {
             return "/ViewError.jsp";
         }
     }
-    
-    
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

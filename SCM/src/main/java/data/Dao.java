@@ -30,6 +30,19 @@ public class Dao {
         else { throw new Exception("Medico no existe"); }
     }
     
+    public List<Medico> getMedicos() throws SQLException {
+        List<Medico> medicos = new ArrayList();
+        try {
+            String sql = "select * from medicos m";
+            PreparedStatement stm = db.prepareStatement(sql);
+            ResultSet rs = db.executeQuery(stm);
+            while (rs.next()) {
+                medicos.add(fromMedicos(rs, "m"));
+            } 
+        }catch (SQLException ex) {}
+        return medicos;
+    }
+    
     public Medico fromMedicos(ResultSet rs, String alias){
         try {
             Medico m = new Medico();
@@ -58,7 +71,7 @@ public class Dao {
         else { throw new Exception("Medico no existe"); }
     }
     
-    public void addMedico(Medico m) throws Exception {
+public void addMedico(Medico m) throws Exception {
         String sql = "insert into medicos(id, password, name, tipo, estado) "
                 + "values (?,?,?,?,?);";
         PreparedStatement stm = db.prepareStatement(sql);
@@ -69,7 +82,7 @@ public class Dao {
         stm.setInt(5, m.getEstado());
         int count=db.executeUpdate(stm);
         if (count==0){
-            throw new Exception("MEdico ya existe");
+            throw new Exception("Medico ya existe");
         }
     }
     
@@ -92,7 +105,8 @@ public class Dao {
     }
      
     public void updateMed(Medico m) throws SQLException, Exception{
-        String sql="update medicos set password=?, name=?, especialidad=?, costo=?, ciudad=?, direccion=?, tipo=?, info=?, estado=? where id=?";
+        String sql="update medicos set password=?, name=?, especialidad=?, costo=?, ciudad=?, direccion=?, tipo=?, info=?, estado=? "
+                + "where id=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, m.getPassword()); 
         stm.setString(2, m.getName()); 
@@ -444,11 +458,10 @@ public class Dao {
     }
     
     public void addCiudad(Ciudad ci) throws Exception {
-        String sql = "insert into ciudades(id, name) "
-                + "values (?, ?);";
+        String sql = "insert into ciudades(name) "
+                + "values (?);";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, String.valueOf(this.allCiudades().size()+1));
-        stm.setString(2, ci.getCiudad());
+        stm.setString(1, ci.getCiudad());
         int count=db.executeUpdate(stm);
         if (count==0){
             throw new Exception("Ciudad ya existe");
