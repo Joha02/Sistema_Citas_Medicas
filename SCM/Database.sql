@@ -12,43 +12,36 @@ create table medicos(id varchar(10) not null, password varchar(10) not null, nam
 
 alter table medicos add constraint medicos_pk primary key (id);
 
-insert into medicos (id, password, name, tipo, estado) values ("111","111","Yoselin Rojas","1",1);
+insert into medicos (id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado) values ("111","111","Yoselin Rojas", "Ortopedia", 12500, "San Jose", "Tibas", "1",1);
 insert into medicos (id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado) values ('444', '444', 'David', 'Cirugia', 60000, 'Alajuela', 'Desamparados', '1', 'info', 1);
 -- ----------------------------PACIENTES-------------------------------------------------
-
 create table pacientes(id varchar(10) not null, password varchar(15) not null, name varchar(50) not null, tipo varchar(10) not null);
 
 alter table pacientes add constraint pacientes_pk primary key (id);
 
-------------------------------ADMINS-------------------------------------------------
-
 insert into pacientes (id, password, name, tipo) values ("222","222","Jhanan Vallejo","2");
 -- ----------------------------ADMINS-------------------------------------------------
-
 create table admins(id varchar(10) not null, password varchar(15) not null, name varchar(50) not null, tipo varchar(10) not null);
 
 alter table admins add constraint admins_pk primary key (id);
 
-
 insert into admins (id, password, name, tipo) values ("333","333","Llerym Choi","3");
 
 -- --------------------------CITAS-------------------------------------------------------
-create table citas(id varchar(10) not null,  date varchar(50) not null, time varchar(50) not null,estado varchar(10) not null, anotaciones varchar(100),  id_medico varchar(10) not null, id_paciente varchar(10));
+create table citas(id varchar(10) not null,  date varchar(50) not null,estado varchar(10) not null, anotaciones varchar(100) not null,  id_medico varchar(10) not null, id_paciente varchar(10));
 
 alter table citas add constraint citas_pk primary key (id);
 
+insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('1', '25/03/2022 2.pm', 'Disponible', ' ', '444', "222");
+insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('2', '25/03/2022 4.pm', 'Disponible', ' ', '111', null);
+-- insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('3', '25/03/2022 6.pm', 'Disponible', ' ', '444', null);
 
-insert into citas (id,date, time, estado,anotaciones, id_medico,id_paciente) values ('1', '25/03/2022', '2.pm',  'Disponible', ' ', '111', null);
-insert into citas (id,date, time, estado,anotaciones, id_medico,id_paciente) values ('2', '25/03/2022', '4.pm',  'Disponible', ' ', '111', null);
-insert into medicos (id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado) values ('1', '111', 'Llerym', 'Cirugia', 60000, 'Alajuela', 'Desamparados', '1', 'info', 1);
+-- ------------------------------------------CIUDAD-------------------------------------------
+create table ciudades(id varchar(10) not null, name varchar(50) not null, provincia varchar(50) not null);
 
---------------------------------------------CIUDAD-------------------------------------------
-create table ciudades(name varchar(50) not null);
+alter table ciudades add constraint ciudades_pk primary key (id);
 
-alter table ciudades add constraint ciudades_pk primary key (name);
-
-insert into ciudades(name) values ("San Rafael");
-
+insert into ciudades(id, name, provincia) values ("234", "San Rafael", "Heredia");
 
 -- -----------------------------------------ESPECIALIDADES----------------------------------------
 create table especialidades(name varchar(50) not null);
@@ -63,4 +56,4 @@ select * from pacientes;
 select* from medicos;
 select * from admins;
 
-select * from citas c where c.id_medico="111" ;
+select * from citas;
