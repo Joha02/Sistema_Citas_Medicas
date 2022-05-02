@@ -1,11 +1,10 @@
-<%@page import="logic.Registro"%>
+<%@page import="presentation.admin.ModelAdmin"%>
 <%@page import="logic.Medico"%>
 <%@page import="java.util.List"%>
 <%@page import="logic.Service"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    Service service = Service.instance();
-    List registros = service.getRegistros();
+    List<Medico> registros = (List<Medico>)session.getAttribute("ListarMedicos");
 %>
 
 <!DOCTYPE html>
@@ -19,27 +18,25 @@
         <%@ include file="/Header.jsp" %>
         <table>
             <tbody>
-                <tr><h2>SOLICITUDES: </h2></tr>
-        
+            <caption><h2>SOLICITUDES</h2></caption>
+            <tr>
+                <th><h2>ID</h2></th>
+                <th><h2>Nombre</h2></th>
+                <th><h2>Estado</h2></th>
+                <th></th>
+            </tr>
             <%
                 for (int i = 0; i < registros.size(); i++) {
-                    Registro reg = (Registro) registros.get(i);
-                    Medico med = reg.getMedico();
+                    Medico med = (Medico) registros.get(i);
             %>
             <tr>
-            <td><h2>ID: </h2><h3><%=med.getID()%></h3></td>
-            <td><h2>Nombre: </h2><h3><%=med.getName()%></h3></td>
-            <td><h2>Estado: </h2>
-                <%if (med.getEstado() == 0) {%>
-                <h3> Pendiente</h3>
-                <%} else {%>
-                <h3> Abrobado</h3>
-                <%}%>
-            </td>
-            <%-- Boton Aprobar--%>
-        </tr>
+                <td><h3><%=med.getID()%></h3></td>
+                <td><h3><%=med.getName()%></h3></td>
+                <td><h3>Pendiente</h3></td>
+                <td><a href="/SCM/presentation/admin/ListadoMedicosUpdate?medicoID=<%=med.getID()%>" class="buttonClass">Aprobar</a></td>
+            </tr>
             <%}%>
-            </tbody>
+        </tbody>
     </table>
     <%@ include file="/Footer.jsp" %> 
 </body>
