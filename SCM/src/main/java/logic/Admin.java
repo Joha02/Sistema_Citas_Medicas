@@ -1,16 +1,15 @@
 package logic;
 
 public class Admin extends Usuario {
-    String tipo;
+    
     
     public Admin() {
         super();
-        this.tipo = "";
+        
     }
     
     public Admin(String ID, String password, String name){
-        super(ID, password, name);
-        this.tipo = "3"; //Se refiere a que es administrador.
+        super(ID, password, name, "3");
     }
     
     public String getTipo() { return tipo; }

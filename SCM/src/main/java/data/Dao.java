@@ -127,6 +127,7 @@ public class Dao {
             p.setID(rs.getString(alias + ".id"));
             p.setPassword(rs.getString(alias + ".password"));
             p.setName(rs.getString(alias + ".name"));
+            p.setTipo("2");
             return p;
         } catch (SQLException ex) { return null; }
     }
@@ -154,6 +155,40 @@ public class Dao {
         if (count==0){
             throw new Exception("Paciente ya existe");
         }
+    }
+    
+    public ArrayList<Cita> readByPaciente(String cedula) throws Exception {
+        ArrayList<Cita> resultado = new ArrayList<>();
+        String sql = "select * from citas c inner join medicos m on c.id_medico= m.id "
+                    + " where c.id_paciente=? order by m.name desc";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setObject(1, cedula);
+        ResultSet rs = db.executeQuery(stm);
+        Cita c;
+     
+        while (rs.next()) {
+                c = fromCita1(rs, "c");
+                resultado.add(c);
+            }
+        return resultado;
+    }
+    
+    public ArrayList<Cita> readByMedico(String id) throws Exception {
+        ArrayList<Cita> resultado = new ArrayList<>();
+        String sql = "select * from citas c where c.id_medico=? ";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setObject(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        
+        while (rs.next()) { 
+            resultado.add(fromCitas(rs, "c")); 
+        } 
+        /*Cita c;
+        while (rs.next()) {
+                c = fromCita2(rs, "c");
+                resultado.add(c);
+            }*/
+        return resultado;
     }
     //----------------------------- ADMINISTRADORES -----------------------------
     public Admin readAdmin(String id, String password) throws Exception {
@@ -268,17 +303,6 @@ public class Dao {
         }
     }
     
-    public void addCiudad(Ciudad e) throws Exception {
-        String sql = "insert into ciudades(name) "
-                + "values(?)";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, e.getCiudad());
-        int count = db.executeUpdate(stm);
-        if (count == 0) {
-            throw new Exception("La ciudad ya existe");
-        }
-    }
-    
     //----------------------------- CITAS ----------------------------  
     public Cita readCita(String id) throws Exception {
         String sql = "select * from citas p where id=?";
@@ -295,9 +319,11 @@ public class Dao {
             Cita c = new Cita();
             c.setId(rs.getString(alias + ".id"));
             c.setDate(rs.getString(alias + ".date"));
+            c.setTime(rs.getString(alias + ".time"));
             c.setEstado(rs.getString(alias + ".estado")); 
             c.setAnotaciones(rs.getString(alias + ".anotaciones"));
-            c.setMedico(new Medico(rs.getString(alias + ".id_medico")));
+            c.setMedico(new Medico("1"));
+            c.getMedico().setID(rs.getString(alias + ".id_medico"));
             c.setpaciente(new Paciente(rs.getString(alias + ".id_paciente")));
             return c;
         } catch (SQLException ex) { return null; }
@@ -315,6 +341,59 @@ public class Dao {
         
            return citasDisponibles; 
      
+    }
+    
+    Cita fromCita1(ResultSet rs, String alias) {
+        try {
+            //Cita
+            Cita c = new Cita();
+            c.setId(rs.getString(alias + ".id"));
+            c.setEstado(rs.getString(alias + ".estado"));
+            c.setDate(rs.getString(alias + ".date"));
+            c.setTime(rs.getString(alias + ".time"));
+            //Paciente
+            Paciente p = new Paciente();
+            p.setID(rs.getString(alias + ".id"));
+            c.setpaciente(p);
+            //Medico
+            Medico m = new Medico();
+            //Ciudad
+            Ciudad ciu = new Ciudad();
+            ciu.setCiudad(rs.getString("m.name"));
+            //Especialidad
+            Especialidad esp = new Especialidad();
+            esp.setEspecialidad(rs.getString("m.name"));
+            m.setID(rs.getString(alias + ".id"));
+            m.setName(rs.getString("m.name"));
+            m.setCiudad(ciu);
+            m.setEspecialidad(esp.getEspecialidad());
+            c.setMedico(m);
+            return c;
+        } catch (SQLException ex) {
+            return null;
+        } 
+    }
+    
+    Cita fromCita2(ResultSet rs, String alias) {
+        try {
+            Cita c = new Cita();
+            c.setId(rs.getString(alias + ".id"));
+            c.setEstado(rs.getString(alias + ".estado"));
+            c.setDate(rs.getString(alias + ".date"));
+            c.setTime(rs.getString(alias + ".time"));
+            //Paciente
+            Paciente p = new Paciente();
+            p.setID(rs.getString(alias + ".id"));
+            c.setpaciente(p);
+            
+            Medico m = new Medico();
+            m.setID(rs.getString(alias + ".id"));
+            c.setMedico(m);
+
+            return c;
+        } catch (SQLException ex) {
+            return null;
+        } 
     }
     
     //---------------------------- CIUDADES ----------------------------
@@ -345,4 +424,59 @@ public class Dao {
         } 
         else { throw new Exception("Ciudad no existe"); }
     }
+    
+     public List<Ciudad> allCiudades() throws Exception {
+        String sql = "select * from ciudades c";
+        PreparedStatement stm = db.prepareStatement(sql);
+        ResultSet rs = db.executeQuery(stm);
+        List<Ciudad> ciudades = new ArrayList();
+        while (rs.next()) { ciudades.add(fromCiudad(rs, "c")); } 
+        return ciudades;
+    }
+    
+    public void addCiudad(Ciudad ci) throws Exception {
+        String sql = "insert into ciudades(id, name) "
+                + "values (?, ?);";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, String.valueOf(this.allCiudades().size()+1));
+        stm.setString(2, ci.getCiudad());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Ciudad ya existe");
+        }
+    }
+    
+    public Cita searchCita(String id) throws Exception {
+        String sql = "select * from citas ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromCitas(rs, "ci"); 
+        } 
+        else { throw new Exception("Cita no existe"); }
+    }
+
+    public Medico search_Medico(String id) throws Exception {
+        String sql = "select * from medicos ci where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) { 
+            return fromMedicos(rs, "ci"); 
+        } 
+        else { throw new Exception("Medico no existe"); }
+    }
+
+    public void agendarCita(Cita cita) throws Exception {
+        String sql = "update citas set id_paciente = ?, estado = 'Reservada' where id=?;";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, cita.getpaciente().getID());
+        stm.setString(2, cita.getId());
+        int count=db.executeUpdate(stm);
+        if (count==0){
+            throw new Exception("Cita no agendada");
+        }
+    }
 }
+

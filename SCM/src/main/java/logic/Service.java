@@ -57,6 +57,7 @@ public class Service {
         }
     }    
     
+
     public Medico searchMedicoID(String ID) throws Exception{
         Medico med = dao.searchMedico(ID);
         if(med != null ){
@@ -200,6 +201,27 @@ public class Service {
     public List<Cita> searchCita(String medico_id) throws Exception{
         return dao.searchCitasDisponibles(medico_id);
     }
+    
+    public Cita search_Cita(String ID) throws Exception{
+        Cita cita = dao.searchCita(ID);
+        if(cita != null ){
+            return cita;
+        }else{
+            throw new Exception("Error");
+        }
+    } 
+
+    public void agendarCita(Cita cita) throws Exception {
+        dao.agendarCita(cita);
+    }
+    
+    public ArrayList<Cita> seachCitasByPaciente(String id) throws Exception{
+        return dao.readByPaciente(id);
+    }
+    public ArrayList<Cita> seachCitasByMedico(String id) throws Exception{
+        return dao.readByMedico(id);
+    }
+
 }
 
 

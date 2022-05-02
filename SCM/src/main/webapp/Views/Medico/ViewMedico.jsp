@@ -2,6 +2,8 @@
 <%@page import="java.util.List"%>
 <%@ page import="logic.Medico,java.text.SimpleDateFormat" %>
 <% Medico med = (Medico) session.getAttribute("usuario");
+
+
     SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
 <html>
     <head>
@@ -11,7 +13,7 @@
     </head>
     <body>
         <%@ include file="/Header.jsp" %>  
-        <div><div class="center"><h1>Información del medico</h1></div>
+        <div><div class="center"><h1>Informaciï¿½n del medico</h1></div>
             <br>
             <table>
                 <tr><td>ID</td><td><%= med.getID()%></td></tr>
@@ -52,3 +54,4 @@
         <%@ include file="/Footer.jsp" %>
     </body>
 </html>
+
