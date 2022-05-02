@@ -15,12 +15,12 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(String ID, Medico medico, Paciente paciente, String date, String time, String estado, String anotaciones) {
+    public Cita(String ID, Medico medico, Paciente paciente, String date, String estado, String anotaciones) {
         this.ID = ID;
         this.medico = medico;
         this.paciente = paciente;
         this.date = date;
-        this.time = time;
+
         this.estado = estado;
         this.anotaciones = anotaciones;
     }

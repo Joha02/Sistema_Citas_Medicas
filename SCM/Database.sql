@@ -12,7 +12,7 @@ create table medicos(id varchar(10) not null, password varchar(10) not null, nam
 
 alter table medicos add constraint medicos_pk primary key (id);
 
-insert into medicos (id, password, name, tipo, estado) values ("111","111","Yoselin Rojas","1",1);
+insert into medicos (id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado) values ("111","111","Yoselin Rojas", "Ortopedia", 12500, "San Jose", "Tibas", "1",1);
 insert into medicos (id,password,name,especialidad, costo,ciudad, direccion, tipo,info,estado) values ('444', '444', 'David', 'Cirugia', 60000, 'Alajuela', 'Desamparados', '1', 'info', 1);
 -- ----------------------------PACIENTES-------------------------------------------------
 create table pacientes(id varchar(10) not null, password varchar(15) not null, name varchar(50) not null, tipo varchar(10) not null);
@@ -33,6 +33,8 @@ create table citas(id varchar(10) not null,  date varchar(50) not null,estado va
 alter table citas add constraint citas_pk primary key (id);
 
 insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('1', '25/03/2022 2.pm', 'Disponible', ' ', '444', "222");
+insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('2', '25/03/2022 4.pm', 'Disponible', ' ', '111', null);
+-- insert into citas (id,date,estado,anotaciones, id_medico,id_paciente) values ('3', '25/03/2022 6.pm', 'Disponible', ' ', '444', null);
 
 -- ------------------------------------------CIUDAD-------------------------------------------
 create table ciudades(id varchar(10) not null, name varchar(50) not null, provincia varchar(50) not null);
@@ -54,5 +56,4 @@ select * from pacientes;
 select* from medicos;
 select * from admins;
 
-select * from citas c where c.id_medico="111" ;
-select * from citas c where c.id_paciente="222" 
+select * from citas;
