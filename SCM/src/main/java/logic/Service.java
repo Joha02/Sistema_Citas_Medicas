@@ -205,8 +205,8 @@ public class Service {
     public ArrayList<Cita> seachCitasByPaciente(String id) throws Exception{
         return dao.readByPaciente(id);
     }
-    public ArrayList<Cita> seachCitasByMedico(String cedula) throws Exception{
-        return dao.readByMedico(cedula);
+    public ArrayList<Cita> seachCitasByMedico(String id) throws Exception{
+        return dao.readByMedico(id);
     }
 
 }

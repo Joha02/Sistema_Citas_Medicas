@@ -154,19 +154,21 @@ public class Dao {
         return resultado;
     }
     
-    public ArrayList<Cita> readByMedico(String cedula) throws Exception {
+    public ArrayList<Cita> readByMedico(String id) throws Exception {
         ArrayList<Cita> resultado = new ArrayList<>();
-        String sql = "select * from citas c inner join pacientes p on c.id_paciente= p.id "
-                    + " where c.id_medico=? ";
+        String sql = "select * from citas c where c.id_medico=? ";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setObject(1, cedula);
+        stm.setObject(1, id);
         ResultSet rs = db.executeQuery(stm);
-        Cita c;
         
+        while (rs.next()) { 
+            resultado.add(fromCitas(rs, "c")); 
+        } 
+        /*Cita c;
         while (rs.next()) {
                 c = fromCita2(rs, "c");
                 resultado.add(c);
-            }
+            }*/
         return resultado;
     }
     //----------------------------- ADMINISTRADORES -----------------------------
@@ -298,6 +300,7 @@ public class Dao {
             Cita c = new Cita();
             c.setId(rs.getString(alias + ".id"));
             c.setDate(rs.getString(alias + ".date"));
+            c.setTime(rs.getString(alias + ".time"));
             c.setEstado(rs.getString(alias + ".estado")); 
             c.setAnotaciones(rs.getString(alias + ".anotaciones"));
             c.setMedico(new Medico("1"));

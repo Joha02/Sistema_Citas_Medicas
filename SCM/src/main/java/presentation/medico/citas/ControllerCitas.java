@@ -29,7 +29,7 @@ public class ControllerCitas extends HttpServlet {
             throws ServletException, IOException, Exception {
         
         
-        request.setAttribute("model", new ModelCitas());
+        request.setAttribute("ModelCitas", new ModelCitas());
         String viewUrl = "";
         switch (request.getServletPath()) {
             case "/presentation/medico/citas/show":
@@ -51,28 +51,20 @@ public class ControllerCitas extends HttpServlet {
     
     public String showAction(HttpServletRequest request) throws Exception {
         
+        ModelCitas model = (ModelCitas) request.getAttribute("ModelCitas");
         Service service = Service.instance();
         HttpSession session = request.getSession(true);
         
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Medico medico;
-        try {
-            medico = service.medicoFind(usuario);
-        } catch (Exception ex) { 
-            medico=null; 
-        }
-        ArrayList<Cita> citas = (ArrayList<Cita>) service.seachCitasByMedico(medico.getID());
-        
-            
+        Medico med = (Medico) session.getAttribute("usuario");
+        ArrayList<Cita> citas = (ArrayList<Cita>) service.seachCitasByMedico(med.getID());
+
         System.out.println("sizeArray->"+citas.size());
         for(int i=0;i<=citas.size()-1;i++){
-            citas.get(i).setMedico(medico);
+            citas.get(i).setMedico(med);
         }
-        
-        session.setAttribute("citasList", citas);
-        
         try {     
-            
+            model.setMedico(med);
+            model.setCitas(citas);
             return "/Views/Medico/citas/ViewCitas.jsp";
         } catch (Exception ex) {
             return "";
