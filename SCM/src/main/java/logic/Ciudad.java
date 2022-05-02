@@ -20,7 +20,7 @@ public class Ciudad {
 
     @Override
     public String toString() {
-        return "Ciudad{" + name + "}";
+        return name;
     }
     
     
