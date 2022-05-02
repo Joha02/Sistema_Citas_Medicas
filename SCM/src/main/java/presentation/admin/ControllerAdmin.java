@@ -74,7 +74,6 @@ public class ControllerAdmin extends HttpServlet{
         request.setAttribute("ModelAdmin", model);
         session.setAttribute("ListarMedicos", registros);
         try {
-
             return "/Views/Admin/ListadoMedicos.jsp";
         } catch (Exception ex) {
             return "";

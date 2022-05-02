@@ -10,6 +10,8 @@ public class Medico extends Usuario {
     String info;
     int estado;
     List<Cita> citas; 
+    List<String> dias;
+    List<Hora> horas;
     
     public Medico() {
     }
@@ -21,7 +23,10 @@ public class Medico extends Usuario {
         this.ciudad = ciudad;
         this.direccion = direccion;
         this.info = info;
+        this.tipo = "1";
         this.estado = 0;
+        this.dias = null;
+        this.horas = null;
     }
 
     public Medico(String tipo) {
@@ -32,6 +37,8 @@ public class Medico extends Usuario {
         super(ID, password, name, "1");
         this.tipo = "1";
         this.estado = 0;
+        this.dias = null;
+        this.horas = null;
     }
  
 
@@ -83,6 +90,22 @@ public class Medico extends Usuario {
         this.estado = estado;
     }
     
+    public List<String> getDias() {
+        return dias;
+    }
+
+    public void setDias(List<String> dias ) {
+        this.dias = dias;
+    }
+    
+    public List<Hora> getHoras() {
+        return horas;
+    }
+
+    public void setHoras(List<Hora> horas) {
+        this.horas = horas;
+    }
+    
     @Override
     public String toString() {
         return "Medico{" + "especialidad=" + especialidad + ", costo=" + costo + ", ciudad=" + ciudad + ", direccion=" + direccion + ", tipo=" + tipo + ", info=" + info + '}';
@@ -95,7 +118,4 @@ public class Medico extends Usuario {
     public void setCitas(List<Cita> citas ) {
         this.citas = citas;
     }
-
-  
-    
 }
