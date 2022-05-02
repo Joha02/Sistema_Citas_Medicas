@@ -32,6 +32,10 @@
             <div class="fila">
                 <img src="${pageContext.request.contextPath}/Images/contraseña.png" width="20" height="20"/>
                 <input class="<%=erroneo("passwordFld", errores)%>" placeholder="Password User" type="password" name="passwordFld" value="<%=form.get("passwordFld")[0]%>" title="<%=title("passwordFld", errores)%>"  required>
+            </div><div><h2></h2></div>
+            <div class="fila">
+                <img src="${pageContext.request.contextPath}/Images/contraseña.png" width="20" height="20"/>
+                <input placeholder="Password User Confirm" type="password" name="passwordFld2" value="" required>
             </div>
             <div><h2></h2></div>
             <div>

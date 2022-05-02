@@ -1,10 +1,7 @@
 <%@page import="logic.Hora"%>
 <%@page import="java.util.List"%>
 <%@ page import="logic.Medico,java.text.SimpleDateFormat" %>
-<% Medico med = (Medico) session.getAttribute("usuario");
-
-
-    SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
+<% Medico med = (Medico) session.getAttribute("usuario");%>
 <html>
     <head>
         <link rel="icon" href="${pageContext.request.contextPath}/Images/medico.png">
@@ -13,22 +10,17 @@
     </head>
     <body>
         <%@ include file="/Header.jsp" %>  
-        <div><div class="center"><h1>Informaciï¿½n del medico</h1></div>
+        <div><div class="center"><h1>Información del medico</h1></div>
             <br>
             <table>
                 <tr><td>ID</td><td><%= med.getID()%></td></tr>
                 <tr><td>Nombre</td><td><%= med.getName()%></td></tr>
-                <% if(med.getCosto() == 0){%>
                 <tr><td>Costo</td><td><%= med.getCosto()%></td></tr>
-                <%} if(med.getDireccion().isEmpty()){%>
                 <tr><td>Direccion</td><td><%= med.getDireccion()%></td></tr>
-                <%} if(med.getInfo().isEmpty()){%>
                 <tr><td>Presentacion</td><td><%= med.getInfo()%></td></tr>
-                <%} if(med.getEspecialidad().isEmpty()){%>
                 <tr><td>Especialidad</td><td><%= med.getEspecialidad()%></td></tr>
-                <%} if((med.getCiudad().getCiudad().isEmpty())){%>
                 <tr><td>Localidad</td><td><%= med.getCiudad()%></td></tr>
-                <%} if(med.getDias() != null){%>
+                <% if(med.getDias() != null){%>
                 <tr><td>Dias Laborales</td></tr>
                 <% 
                     List<String> dias = med.getDias();

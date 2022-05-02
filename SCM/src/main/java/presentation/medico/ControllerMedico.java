@@ -148,23 +148,23 @@ public class ControllerMedico extends HttpServlet {
     public List<Hora> horarioLaboral(int Hinicio, int Hfinal, int frec, HttpServletRequest request) {
         ModelMedico model = (ModelMedico) request.getAttribute("ModelMedico");
         List<Hora> horario = new ArrayList();
-        horario.add(new Hora(Hinicio, 00));
-        int min = 00;
+        horario.add(new Hora(Hinicio, 0));
+        int min = 0;
         int hrs = Hinicio;
         for(int i = Hinicio; i < Hfinal; i++) {
             if(frec > 10){
                 min += frec;
                 if(min > 59){
-                    min = 00;
+                    min = 0;
                     hrs += 1;
                 }
                 horario.add(new Hora(hrs, min));
             } else {
                 hrs += 1;
-                horario.add(new Hora(hrs, 00));
+                horario.add(new Hora(hrs, 0));
             }
         }
-        horario.add(new Hora(Hfinal, 00));
+        horario.add(new Hora(Hfinal, 0));
         model.getCurrent().setHoras(horario);
         return horario;
     }

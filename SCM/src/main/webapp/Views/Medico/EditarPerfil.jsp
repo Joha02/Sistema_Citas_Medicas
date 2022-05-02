@@ -116,7 +116,9 @@
                 <tbody>
             </table>
             <br>
-            <button class="center" id="btnActualizar" type="submit" class="">Actualizar</button>                  
+            <button class="center" id="btnActualizar" type="submit" class="">Actualizar</button>      
+            <br>
+            <div class="center"> <a href="/SCM/Views/Medico/ViewMedico.jsp" class="buttonClass">Regresar</a></div>
             <br><br><br><br>                    
         </form>
         <%@ include file="/Footer.jsp" %>

@@ -34,6 +34,8 @@
                 <%}%>
                 </tbody>
             </table>
+            <br>
+            <div class="center"> <a href="/SCM/Views/Admin/ViewAdmin.jsp" class="buttonClass">Regresar</a></div>
             <br><br><br><br>
         </div>
     </body>

@@ -1,6 +1,5 @@
 <%@ page import="logic.Admin,java.text.SimpleDateFormat" %>
-<% Admin adm = (Admin) session.getAttribute("admin");
-    SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm");%>
+<% Admin adm = (Admin) session.getAttribute("usuario");%>
 <html>
     <head>
         <link rel="icon" href="${pageContext.request.contextPath}/Images/administrador.png">
@@ -18,8 +17,8 @@
                 <th><h2>Name</h2></th>
             </tr>
             <tr>
-                <td><h3><%= adm.getID()%></h3></td>
-                <td><h3><%= adm.getName()%></h3></td>
+                <td><h3><%=adm.getID()%></h3></td>
+                <td><h3><%=adm.getName()%></h3></td>
             </tr>
         </tbody>
     </table><br>

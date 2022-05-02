@@ -19,6 +19,7 @@ public class ControllerLogin extends HttpServlet {
             throws ServletException, IOException {
 
         request.setAttribute("ModelLogin", new ModelLogin());
+        HttpSession session = request.getSession(true);
 
         String viewUrl = "";
         switch (request.getServletPath()) {
@@ -27,6 +28,7 @@ public class ControllerLogin extends HttpServlet {
                 break;
             case "/presentation/login/login":
                 viewUrl = this.login(request);
+                session.setAttribute("url", viewUrl);
                 break;
             case "/presentation/login/logout":
                 viewUrl = this.logout(request);

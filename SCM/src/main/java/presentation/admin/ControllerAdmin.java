@@ -68,8 +68,9 @@ public class ControllerAdmin extends HttpServlet{
         try {
             admin = service.adminFind(usuario);
             model.setAdmin(admin);
+            model.getAdmin().setTipo("3");
             request.setAttribute("ModelAdmin", model);
-            session.setAttribute("admin", admin);
+            session.setAttribute("usuario", admin);
             session.setAttribute("ModelAdmin", model);
         
             return "/Views/Admin/ViewAdmin.jsp";
@@ -82,9 +83,11 @@ public class ControllerAdmin extends HttpServlet{
         HttpSession session = request.getSession(true);
 
         List<Medico> registros = service.getRegistros();
+        List<Medico> medicos = service.getMedicos();
         
         request.setAttribute("ModelAdmin", model);
         session.setAttribute("ListarMedicos", registros);
+        session.setAttribute("AllMedicos", medicos);
         try {
             return "/Views/Admin/ListadoMedicos.jsp";
         } catch (Exception ex) {
@@ -101,10 +104,12 @@ public class ControllerAdmin extends HttpServlet{
         service.setEstadoMed(1, medID);
         
         List<Medico> registros = service.getRegistros();
+        List<Medico> medicos = service.getMedicos();
         
         model.setListarMedicos(registros);
         request.setAttribute("ModelAdmin", model);
         session.setAttribute("ListarMedicos", registros);
+        session.setAttribute("AllMedicos", medicos);
         
         return "/Views/Admin/ListadoMedicos.jsp";
     }

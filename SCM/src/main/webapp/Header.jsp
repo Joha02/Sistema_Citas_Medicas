@@ -1,5 +1,8 @@
+<%@page import="logic.Admin"%>
 <%@page import = "logic.Usuario"%>
-<% Usuario usuario = (Usuario) session.getAttribute("usuario");  %>
+<% Usuario usuario = (Usuario) session.getAttribute("usuario");
+   String url = (String) session.getAttribute("url");
+%>
 
 <header>
     <div class="logo">
@@ -12,7 +15,10 @@
                 <a href="/SCM/index.jsp">Inicio</a>
             </li>
             
-            <% if (usuario != null) { %>
+            <% if (usuario != null) {%>
+            <li >
+                <a  href="/SCM<%=url%>">Perfil</a>
+            </li>
             <li >
                 <a  href="/SCM/presentation/login/logout">Logout</a>
             </li> 
