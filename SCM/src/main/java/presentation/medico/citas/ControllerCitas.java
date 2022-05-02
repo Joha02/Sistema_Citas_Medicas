@@ -62,9 +62,9 @@ public class ControllerCitas extends HttpServlet {
         for(int i=0;i<=citas.size()-1;i++){
             citas.get(i).setMedico(med);
         }
-        session.setAttribute("citasList", citas);
         try {     
             model.setMedico(med);
+            model.setCitas(citas);
             return "/Views/Medico/citas/ViewCitas.jsp";
         } catch (Exception ex) {
             return "";

@@ -36,7 +36,6 @@
                 <%--<a href="/proyecto1P4/presentation/medico/citas/cancelarCita?citaId=<%=citas.get(i).getIdCita()%>" class="btn btn-primary">Cancelar</a>--%>
             </div>
         </div>
-        <% } %>
         
         
         
