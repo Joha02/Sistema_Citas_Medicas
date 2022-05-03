@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import logic.Cita;
 import logic.Paciente;
+import logic.Usuario;
 
 public class ModelCitas {
     List<Cita> citas;
     Paciente paciente;
+    Usuario current;
 
     public ModelCitas() {
         this.reset();
@@ -24,7 +26,7 @@ public class ModelCitas {
     }
     
     public void setCitas(List<Cita> citas){
-        this.citas =citas;    
+        this.citas = citas;    
     }
 
      public List<Cita> getCitas() {
@@ -39,5 +41,9 @@ public class ModelCitas {
         this.paciente = paciente;
     }
      
-     
+    public void setCurrent(Usuario current) {
+        this.current = current;
+    }
+    
+  
 }

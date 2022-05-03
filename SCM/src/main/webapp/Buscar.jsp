@@ -54,6 +54,10 @@
                                             <input type = "hidden" name = "id_cita" value= "<%=c.getId() %>" />
                                           <input type="submit" value="Agendar"/>
                                         </form>
+                                        <form action = "/SCM/presentation/paciente/show/show" method = "GET">
+                                            <input type = "hidden" name = "id_cita" value= "<%=c.getId() %>" />
+                                          <input type="submit" value="Agendar"/>
+                                        </form>
                                     </td>
                                 </tr>
                                 <%}%>

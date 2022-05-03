@@ -5,10 +5,7 @@
 <%@page import="logic.Cita"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<% ModelCitas model = (ModelCitas) request.getAttribute("ModelCitas");
- List<Cita> citas = model.getCitas() ;
- Paciente pac = model.getPaciente();
-%>
+<% ModelCitas model = (ModelCitas) request.getAttribute("ModelCitas");%>
 
 <!DOCTYPE html>
 <html>
@@ -20,26 +17,21 @@
     <body>
         <%@ include file="/Header.jsp" %>
         
-        <div> <% for(Cita c:citas){%>
-            <div>
-    <table>
-        <tr><td>ID</td><td><%= c.getId()%></td></tr>
-        <tr><td>Paciente</td><td><%= pac.getName()%></td></tr>
-        <tr><td>Especialty</td><td><%= c.getMedic().getName()%></td></tr>
-        <tr><td>Costo</td><td><%= c.getMedic().getCosto()%></td></tr>
-        <tr><td>Ciudad</td><td><%= c.getMedic().getCiudad().getCiudad()%></td></tr>
-        <tr><td>Paciente</td><td><%= c.getpaciente().getName()%></td></tr>
-        <tr><td>Fecha</td><td><%= c.getDate()%></td></tr>
-    </table>
-    <div>
-        <br>
-        <br>
-        <br>
-    <%}%></div>
-            </div>
-        </div>
-        
-        
+        <table>
+            <% for(Cita c : model.getCitas()){%> 
+         
+                <tr><td>ID</td><td><%= c.getId()%></td></tr>
+                <tr><td>Paciente</td><td><%= c.getPacient().getName() %></td></tr>
+                <tr><td>Especialty</td><td><%= c.getMedic().getName()%></td></tr>
+                <tr><td>Costo</td><td><%= c.getMedic().getCosto()%></td></tr>
+                <tr><td>Ciudad</td><td><%= c.getMedic().getCiudad().getCiudad()%></td></tr>
+                <tr><td>Paciente</td><td><%= c.getpaciente().getName()%></td></tr>
+                <tr><td>Fecha</td><td><%= c.getDate()%></td></tr>
+          
+             <%}%>
+        </table>
+          
+            
         
         <%@ include file="/Footer.jsp" %>
     </body>

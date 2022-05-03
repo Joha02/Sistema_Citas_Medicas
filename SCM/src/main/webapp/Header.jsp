@@ -30,6 +30,13 @@
                     </li>
                 <% } %>
             <% } %>
+            <%  if (usuario != null) { %>
+                <% if (Integer.valueOf(usuario.getTipo()) == 2) { %>
+                    <li>
+                        <a href="/SCM/presentation/paciente/citas/show">Citas</a>
+                    </li>
+                <% } %>
+            <% } %>
             <% if (usuario == null) {%>
             <li>
                 <a href="/SCM/presentation/login/show">Login</a>
