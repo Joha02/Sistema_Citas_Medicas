@@ -121,15 +121,15 @@ public class Service {
         }else{
             throw new Exception("Error");
         }
-    } 
+    }  
     
     public Admin adminFind(Usuario usuario) throws Exception{
-        Admin ad = dao.searchAdmin(usuario.getID());
-        if (ad != null) 
-            return ad;
+        Admin adm = dao.searchAdmin(usuario.getID());
+        if (adm != null) 
+            return adm;
         else 
             throw new Exception("Admin no existe");
-    } 
+    }
     
     public List<Medico> getMedicos() throws SQLException{
         List<Medico> medicos = dao.getMedicos();
@@ -168,14 +168,6 @@ public class Service {
     public void addCiudad(String ciu) throws Exception{
         dao.addCiudad(new Ciudad(ciu));
     }
-    
-    public Admin adminFind(Usuario usuario) throws Exception{
-        Admin adm = dao.searchAdmin(usuario.getID());
-        if (adm != null) 
-            return adm;
-        else 
-            throw new Exception("Admin no existe");
-    }    
     
     //--------------------------- CIUDAD ---------------------------
     public void AddCiudad(Ciudad ciudad) throws Exception {
