@@ -212,7 +212,7 @@ public class Service {
         return dao.searchCitasDisponibles(medico_id);
     }
      public List<Cita> searchCitabyPaciente(String pacienteId) throws Exception{
-        return dao.searchCitasDisponibles(pacienteId);
+        return dao.searchCitasbyPaciente(pacienteId);
     }
     
     public Cita search_Cita(String ID) throws Exception{

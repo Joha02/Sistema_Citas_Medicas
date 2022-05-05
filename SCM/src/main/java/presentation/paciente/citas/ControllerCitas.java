@@ -15,9 +15,10 @@ import logic.Cita;
 import logic.Medico;
 import logic.Paciente;
 
-@WebServlet(name = "ControllerCitas", urlPatterns = {"/presentation/paciente/citas/show", "/presentation/paciente/show/show"})
+@WebServlet(name = "ControllerCitas", urlPatterns = {"/presentation/paciente/citas/show"})
 public class ControllerCitas extends HttpServlet {
     protected void processRequest(HttpServletRequest request,
+            
             HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -26,12 +27,8 @@ public class ControllerCitas extends HttpServlet {
         String viewUrl = "";
         switch (request.getServletPath()) {
             case "/presentation/paciente/citas/show":
-                viewUrl = this.showAction(request);
-                break;
-            case "/presentation/paciente/show/show":
                 viewUrl = this.mostrarCitaAction(request);
-                break;
-          
+            break;
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
     }
@@ -47,11 +44,19 @@ public class ControllerCitas extends HttpServlet {
             if(pat == null){
                 return "/presentation/login/show";
             }
+            
+           
             List<Cita> citas = service.searchCitabyPaciente(pat.getID());
+            for (Cita c: citas){
+                 c.setMedico(service.searchMedicoID(c.getMedic().getID()));
+                 c.setpaciente(pat);
+            }
             model.setCitas(citas);
             model.setCurrent(pat);
+            
+            
  
-            return "/Views/Paciente/citas/ViewCitas.jsp";
+            return "/ViewCitas.jsp";
             
         } catch (Exception ex) {
             
@@ -60,7 +65,7 @@ public class ControllerCitas extends HttpServlet {
     }
 
     public String showAction(HttpServletRequest request) {
-        return "/Views/Paciente/citas/ViewCitas.jsp";
+        return "/ViewCitas.jsp";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
