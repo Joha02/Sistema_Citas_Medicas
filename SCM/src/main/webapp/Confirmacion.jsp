@@ -7,8 +7,7 @@
 <%@page import="presentation.confirmacion.ModelConfirmacion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link href="/SCM/CSS/Form.css" rel="stylesheet" type="text/css" /> 
-<% ModelConfirmacion model = (ModelConfirmacion) request.getAttribute("ModelConfirmacion");
-%>
+<% ModelConfirmacion model = (ModelConfirmacion) request.getAttribute("ModelConfirmacion");%>
 <!DOCTYPE html>
 <html>
     <head>

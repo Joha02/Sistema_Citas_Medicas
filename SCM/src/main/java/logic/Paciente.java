@@ -1,10 +1,14 @@
 package logic;
 
+import java.util.List;
+
 public class Paciente extends Usuario {
-    
+    List<Cita> citas; 
     public Paciente(){
         super();
         this.tipo = "";
+
+
     }
    
     public Paciente(String id){
@@ -22,5 +26,16 @@ public class Paciente extends Usuario {
     @Override  
     public String toString() {
         return "Paciente: " + name + "\n";
-    }     
+    }    
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
+    
+    
+    
 }
