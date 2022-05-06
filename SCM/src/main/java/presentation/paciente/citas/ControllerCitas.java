@@ -1,72 +1,72 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package presentation.paciente.citas;
-
-import presentation.paciente.citas.*;
-import logic.Cita;
-import logic.Paciente;
-import logic.Paciente;
 import logic.Service;
 import logic.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.Cita;
+import logic.Medico;
+import logic.Paciente;
 
-@WebServlet(name = "PacienteCitasController", urlPatterns = {"/presentation/paciente/citas/show"})
+@WebServlet(name = "ControllerCitas", urlPatterns = {"/presentation/paciente/citas/show"})
 public class ControllerCitas extends HttpServlet {
+    protected void processRequest(HttpServletRequest request,
+            
+            HttpServletResponse response)
+            throws ServletException, IOException {
 
- 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, Exception {
-        
-        
         request.setAttribute("ModelCitas", new ModelCitas());
+
         String viewUrl = "";
         switch (request.getServletPath()) {
             case "/presentation/paciente/citas/show":
-                viewUrl = this.showPaciente(request);
-                break;
-          
+                viewUrl = this.mostrarCitaAction(request);
+            break;
         }
         request.getRequestDispatcher(viewUrl).forward(request, response);
     }
-    
-    public String showPaciente(HttpServletRequest request) throws Exception {
-        return this.showAction(request);
-    }
-    
-    public String showAction(HttpServletRequest request) throws Exception {
-        
+
+    public String mostrarCitaAction(HttpServletRequest request) {
         ModelCitas model = (ModelCitas) request.getAttribute("ModelCitas");
         Service service = Service.instance();
-        HttpSession session = request.getSession(true);
-        
-        Paciente pac = (Paciente) session.getAttribute("usuario");
-        ArrayList<Cita> citas = (ArrayList<Cita>) service.seachCitasByPaciente(pac.getID());
 
-        System.out.println("sizeArray->"+citas.size());
-        for(int i=0;i<=citas.size()-1;i++){
-            citas.get(i).setpaciente(pac);
-        }
-        try {     
-            model.setPaciente(pac);
+        try {
+            HttpSession session = request.getSession(true);
+            Paciente pat = (Paciente) session.getAttribute("usuario");
+            
+            if(pat == null){
+                return "/presentation/login/show";
+            }
+            
+           
+            List<Cita> citas = service.searchCitabyPaciente(pat.getID());
+            for (Cita c: citas){
+                 c.setMedico(service.searchMedicoID(c.getMedic().getID()));
+                 c.setpaciente(pat);
+            }
             model.setCitas(citas);
-            return "/Views/Paciente/citas/ViewCitas.jsp";
+            model.setCurrent(pat);
+            
+            
+ 
+            return "/ViewCitas.jsp";
+            
         } catch (Exception ex) {
-            return "";
+            
+           return "/Error.jsp";
         }
     }
-    
+
+    public String showAction(HttpServletRequest request) {
+        return "/ViewCitas.jsp";
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -80,11 +80,7 @@ public class ControllerCitas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ControllerCitas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -98,11 +94,7 @@ public class ControllerCitas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(ControllerCitas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -114,5 +106,4 @@ public class ControllerCitas extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

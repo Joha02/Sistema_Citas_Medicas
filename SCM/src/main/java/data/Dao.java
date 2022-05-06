@@ -366,6 +366,20 @@ public void addMedico(Medico m) throws Exception {
      
     }
     
+    public List<Cita> searchCitasbyPaciente(String id_paciente) throws Exception {
+        String sql = "select * from citas c where id_paciente=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, id_paciente);
+        ResultSet rs = db.executeQuery(stm);
+   
+        List<Cita> citasPaciente = new ArrayList();
+     
+        while (rs.next()) { citasPaciente.add(fromCitas(rs, "c")); } 
+        
+         return citasPaciente; 
+     
+    }
+    
     Cita fromCita1(ResultSet rs, String alias) {
         try {
             //Cita

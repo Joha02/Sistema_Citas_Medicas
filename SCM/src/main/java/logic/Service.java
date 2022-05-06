@@ -211,6 +211,9 @@ public class Service {
     public List<Cita> searchCita(String medico_id) throws Exception{
         return dao.searchCitasDisponibles(medico_id);
     }
+     public List<Cita> searchCitabyPaciente(String pacienteId) throws Exception{
+        return dao.searchCitasbyPaciente(pacienteId);
+    }
     
     public Cita search_Cita(String ID) throws Exception{
         Cita cita = dao.searchCita(ID);

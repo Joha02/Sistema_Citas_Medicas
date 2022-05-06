@@ -15,6 +15,7 @@
     <table>
         <tr><td>Username</td><td><%= pat.getID()%></td></tr>
         <tr><td>Name</td><td><%= pat.getName()%></td></tr>
+
     </table><br>
 
     <%@ include file="/Footer.jsp" %>
